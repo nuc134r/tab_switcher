@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 
 class TabCountIcon extends StatelessWidget {
-  const TabCountIcon({@required this.controller, Key key}) : super(key: key);
+  const TabCountIcon({required this.controller, Key? key}) : super(key: key);
 
   final TabSwitcherController controller;
 

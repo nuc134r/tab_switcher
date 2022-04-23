@@ -8,7 +8,7 @@ typedef TabWidgetBuilder = Widget Function(BuildContext context, TabSwitcherTab 
 typedef ImageCaptureCallback = void Function(ui.Image image);
 
 class PreviewCapturerWidget extends StatefulWidget {
-  PreviewCapturerWidget({@required this.child, @required this.callback, this.tag});
+  PreviewCapturerWidget({required this.child, required this.callback, required this.tag});
 
   final Widget child;
   final ImageCaptureCallback callback;
@@ -19,7 +19,7 @@ class PreviewCapturerWidget extends StatefulWidget {
 }
 
 class _PreviewCapturerWidgetState extends State<PreviewCapturerWidget> {
-  GlobalKey _key = new GlobalKey();
+  final GlobalKey _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) => RepaintBoundary(child: widget.child, key: _key);
@@ -32,18 +32,21 @@ class _PreviewCapturerWidgetState extends State<PreviewCapturerWidget> {
 
   void _captureImage() async {
     //Logger.measure("TabPreview", "Capture", () async {
-    RenderRepaintBoundary boundary = _key.currentContext.findRenderObject();
-    var retries = 3;
-    do {
-      try {
-        ui.Image image = await boundary.toImage(pixelRatio: 1);
-        if (image != null) {
+    var ro = _key.currentContext?.findRenderObject();
+    if (ro is RenderRepaintBoundary) {
+      RenderRepaintBoundary boundary = ro;
+      var retries = 3;
+      do {
+        try {
+          ui.Image image = await boundary.toImage(pixelRatio: 1);
           widget.callback(image);
           return;
+        } catch (e) {
+          if (true) {}
         }
-      } catch (e) {}
-      await Future.delayed(Duration(milliseconds: 20));
-    } while (--retries != 0);
+        await Future.delayed(Duration(milliseconds: 20));
+      } while (--retries != 0);
+    }
     //});
   }
 }

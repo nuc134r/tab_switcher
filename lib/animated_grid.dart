@@ -6,11 +6,11 @@ typedef AnimatedGridBuilder<T> = Widget Function(BuildContext, T item, AnimatedG
 class AnimatedGrid<T> extends StatelessWidget {
   /// An animated grid the animates when the items change sort.
   const AnimatedGrid({
-    Key key,
-    @required this.itemHeight,
-    @required this.items,
-    @required this.keyBuilder,
-    @required this.builder,
+    Key? key,
+    required this.itemHeight,
+    required this.items,
+    required this.keyBuilder,
+    required this.builder,
     this.columns = 2,
     this.duration = const Duration(milliseconds: 750),
     this.curve = Curves.elasticOut,
@@ -78,7 +78,7 @@ class AnimatedGrid<T> extends StatelessWidget {
                     final yIndex = indicies.last;
                     final offset = Offset(xIndex * itemWidth, yIndex * itemHeight);
 
-                    return TweenAnimationBuilder(
+                    return TweenAnimationBuilder<Offset>(
                       tween: Tween<Offset>(end: offset),
                       duration: duration,
                       curve: curve,
@@ -117,11 +117,11 @@ class AnimatedGrid<T> extends StatelessWidget {
 class AnimatedGridDetails {
   /// A collection of details currently being used by [AnimatedGrid]
   AnimatedGridDetails({
-    @required this.index,
-    @required this.columnIndex,
-    @required this.rowIndex,
-    @required this.columns,
-    @required this.rows,
+    required this.index,
+    required this.columnIndex,
+    required this.rowIndex,
+    required this.columns,
+    required this.rows,
   });
 
   /// The current index

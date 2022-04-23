@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 import 'package:tab_switcher/tab_switcher_minimized_tab.dart';
-import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
 class TabSwitcherTabList extends StatefulWidget {
   TabSwitcherTabList(this.controller);
@@ -75,6 +75,6 @@ class _TabSwitcherTabListState extends State<TabSwitcherTabList> {
     );
   }
 
-  StreamSubscription<TabSwitcherTab> _addSub;
-  StreamSubscription<TabSwitcherTab> _closeSub;
+  late StreamSubscription<TabSwitcherTab> _addSub;
+  late StreamSubscription<TabSwitcherTab> _closeSub;
 }

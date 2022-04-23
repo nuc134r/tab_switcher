@@ -7,8 +7,8 @@ class UiImageWidget extends StatelessWidget {
   final BoxFit fit;
 
   const UiImageWidget({
-    Key key,
-    @required this.image,
+    Key? key,
+    required this.image,
     this.fit = BoxFit.fill,
   }) : super(key: key);
 

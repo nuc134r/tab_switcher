@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:syntax_styles.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 import 'package:tab_switcher/ui_image_widget.dart';
 
@@ -11,9 +10,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
   final TabSwitcherTab _tab;
   final bool _isCurrent;
 
+  @override
   Widget build(BuildContext context) {
     final title = _tab.getTitle();
     final subtitle = _tab.getSubtitle();
+    final theme = Theme.of(context);
 
     return Dismissible(
       movementDuration: Duration(milliseconds: 1),
@@ -26,7 +27,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: Container(
             decoration: BoxDecoration(
-              color: _isCurrent ? NuxStyles.accentColor : NuxStyles.backgroundColor32dp,
+              color: _isCurrent ? theme.colorScheme.secondary : theme.colorScheme.background,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(color: Colors.black12, spreadRadius: 1.5, blurRadius: 4),
@@ -97,7 +98,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                                       ),
                                     ),
                                   )
-                                : UiImageWidget(image: _tab.previewImage, fit: BoxFit.fitWidth),
+                                : UiImageWidget(image: _tab.previewImage!, fit: BoxFit.fitWidth),
                           ),
                         ),
                       ],

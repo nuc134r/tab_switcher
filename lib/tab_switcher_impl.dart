@@ -6,12 +6,12 @@ import 'package:tab_switcher/tab_switcher_app_bar.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 import 'package:tab_switcher/tab_switcher_tab_grid.dart';
 
-typedef TabWidgetBuilder = Widget Function(BuildContext context, TabSwitcherTab tab);
+typedef TabWidgetBuilder = Widget Function(BuildContext context, TabSwitcherTab? tab);
 
 class TabSwitcherWidget extends StatefulWidget {
   TabSwitcherWidget({
-    @required this.controller,
-    @required this.appBarBuilder,
+    required this.controller,
+    required this.appBarBuilder,
     this.bodyBuilder,
     this.emptyScreenBuilder,
     this.switcherFooterBuilder,
@@ -34,27 +34,27 @@ class TabSwitcherWidget extends StatefulWidget {
 
       // syncing controller's current page after header swipe gesture
       if (_appBarPageController.hasClients &&
-          _appBarPageController.page == _appBarPageController.page.floorToDouble() &&
+          _appBarPageController.page == _appBarPageController.page!.floorToDouble() &&
           !_isNavigatingToPage) {
-        var index = _appBarPageController.page.floor();
-        if (controller.currentTab.index != index) {
+        var index = _appBarPageController.page!.floor();
+        if (controller.currentTab != null && controller.currentTab!.index != index) {
           controller.switchToTab(index);
         }
       }
     });
   }
 
-  PageController _appBarPageController;
-  PageController _bodyPageController;
+  late PageController _appBarPageController;
+  late PageController _bodyPageController;
   bool _isNavigatingToPage = false;
 
   final TabSwitcherController controller;
 
-  final TabWidgetBuilder appBarBuilder;
-  final TabWidgetBuilder bodyBuilder;
-  final WidgetBuilder emptyScreenBuilder;
-  final WidgetBuilder switcherFooterBuilder;
-  final Color backgroundColor;
+  final TabWidgetBuilder? appBarBuilder;
+  final TabWidgetBuilder? bodyBuilder;
+  final WidgetBuilder? emptyScreenBuilder;
+  final WidgetBuilder? switcherFooterBuilder;
+  final Color? backgroundColor;
 
   final int appBarHeight;
 
@@ -74,7 +74,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
             widget.initPageControllers();
           } else if (widget.controller.currentTab != null && widget._appBarPageController.positions.isNotEmpty) {
             widget._isNavigatingToPage = true;
-            widget._appBarPageController.jumpToPage(widget.controller.currentTab.index);
+            widget._appBarPageController.jumpToPage(widget.controller.currentTab!.index);
             widget._isNavigatingToPage = false;
           }
         }));
@@ -100,9 +100,9 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: TabSwitcherAppBar(
+          widget.appBarBuilder,
           widget.controller,
           widget._appBarPageController,
-          widget.appBarBuilder,
           MediaQuery.of(context),
           widget.appBarHeight,
           backgroundColor,
@@ -116,7 +116,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                           ? widget.emptyScreenBuilder?.call(context) ?? Center(child: Text('No open tabs'))
                           : TabSwitcherTabGrid(widget.controller),
                     ),
-                    ...widget.switcherFooterBuilder != null ? [widget.switcherFooterBuilder.call(context)] : [],
+                    ...widget.switcherFooterBuilder != null ? [widget.switcherFooterBuilder!.call(context)] : [],
                   ],
                 ),
               )
@@ -147,8 +147,8 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
     );
   }
 
-  StreamSubscription<TabSwitcherTab> _sub1;
-  StreamSubscription<TabSwitcherTab> _sub2;
-  StreamSubscription<bool> _sub3;
-  StreamSubscription<TabSwitcherTab> _sub4;
+  late StreamSubscription<TabSwitcherTab> _sub1;
+  late StreamSubscription<TabSwitcherTab> _sub2;
+  late StreamSubscription<bool> _sub3;
+  late StreamSubscription<TabSwitcherTab?> _sub4;
 }

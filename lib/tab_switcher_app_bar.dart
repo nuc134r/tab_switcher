@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 import 'package:tab_switcher/tab_switcher_impl.dart';
-import 'package:utils/responsive_page_view_scroll_physics.dart';
+import 'package:tab_switcher/utils/responsive_page_view_scroll_physics.dart';
 
 class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
   TabSwitcherAppBar(
+    this.builder,
     this.controller,
     this.pageController,
-    this.builder,
     this.mediaQuery,
     this.appBarHeight,
     this.backgroundColor,
   );
 
   final PageController pageController;
-  final TabWidgetBuilder builder;
+  final TabWidgetBuilder? builder;
   final MediaQueryData mediaQuery;
   final int appBarHeight;
   final TabSwitcherController controller;
@@ -32,14 +32,14 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: mediaQuery.padding.top + appBarHeight,
           child: Stack(
             children: [
-              builder(context, null),
+              builder!(context, null),
               IgnorePointer(
                 ignoring: controller.switcherActive,
                 child: AnimatedOpacity(
                   child: controller.switcherActive
-                      ? builder(
+                      ? builder!(
                           context,
-                          controller.currentTab != null ? controller.tabs[controller.currentTab.index] : null,
+                          controller.currentTab != null ? controller.tabs[controller.currentTab!.index] : null,
                         )
                       : Container(
                           color: backgroundColor,
@@ -47,7 +47,7 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
                             controller: pageController,
                             physics: ResponsiveBouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                             itemCount: controller.tabCount,
-                            itemBuilder: (c, i) => builder(context, controller.tabs[i]),
+                            itemBuilder: (c, i) => builder!(context, controller.tabs[i]),
                           ),
                         ),
                   duration: Duration(milliseconds: 125),
