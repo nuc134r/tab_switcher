@@ -5,14 +5,17 @@
 Framework for building apps with fullscreen tab based UI in a way Chrome for Android is built.
 
 ## Features
-* Gesture support
-  * Swipe header horizontally to switch between tabs
-  * Swipe header down to open tab grid
-  * Swipe minimized tab to close it
-* Tab content is captured to image when tab is minimized, background tabs do not waste resources on rebuilding
-* Uses colors specified in `MaterialApp`'s `ThemeData`
-* Customizable: replace everything with custom `Widget`
-* Comes with tab count button out of the box
+- [x] Gesture support
+* Swipe header horizontally to switch between tabs
+* Swipe header down to open tab grid
+* Swipe minimized tab to close it
+- [x] Tab content is captured to image when tab is minimized, background tabs do not waste resources on rebuilding
+- [x] Uses colors specified in `MaterialApp`'s `ThemeData`
+- [x] Customizable: replace everything with custom `Widget`
+- [x] Comes with tab count button out of the box
+- [ ] Preserving tab state is straightforward
+- [ ] Everything is smoothly animated
+- [ ] Landscape oprientation is supported
 
 ## Screenshot
 <img src="https://user-images.githubusercontent.com/13202642/167720635-e540360b-8f99-4f30-a47b-39493f8f7a31.png#gh-light-mode-only" width="450" align="center">
