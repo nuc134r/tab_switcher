@@ -15,6 +15,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
     final title = _tab.getTitle();
     final subtitle = _tab.getSubtitle();
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Dismissible(
       movementDuration: Duration(milliseconds: 1),
@@ -27,7 +28,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: Container(
             decoration: BoxDecoration(
-              color: _isCurrent ? theme.colorScheme.secondary : theme.colorScheme.background,
+              color: _isCurrent ? colorScheme.primary : colorScheme.surface,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(color: Colors.black12, spreadRadius: 1.5, blurRadius: 4),
@@ -43,7 +44,8 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: TextStyle(fontSize: 14),
+                          style: TextStyle(
+                              fontSize: 14, color: _isCurrent ? colorScheme.onPrimary : colorScheme.onSurface),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -51,7 +53,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                       GestureDetector(
                         child: Padding(
                           padding: const EdgeInsets.all(4),
-                          child: Icon(Icons.close, size: 20, color: Colors.white30),
+                          child: Icon(Icons.close,
+                              size: 20,
+                              color: _isCurrent
+                                  ? colorScheme.onPrimary.withOpacity(0.5)
+                                  : colorScheme.onSurface.withOpacity(0.5)),
                         ),
                         behavior: HitTestBehavior.opaque,
                         onTap: onClose,
@@ -70,7 +76,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   subtitle,
-                                  style: TextStyle(fontSize: 12, color: Colors.white54),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: _isCurrent
+                                          ? colorScheme.onPrimary.withOpacity(0.5)
+                                          : colorScheme.onSurface.withOpacity(0.5)),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
@@ -93,7 +103,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                                     child: Text(
                                       'No preview',
                                       style: TextStyle(
-                                        color: Colors.white54,
+                                        color: colorScheme.onSurface.withOpacity(0.5),
                                         fontSize: 10,
                                       ),
                                     ),

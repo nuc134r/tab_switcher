@@ -113,7 +113,13 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                   children: [
                     Expanded(
                       child: noTabs
-                          ? widget.emptyScreenBuilder?.call(context) ?? Center(child: Text('No open tabs'))
+                          ? widget.emptyScreenBuilder?.call(context) ??
+                              Center(
+                                child: Text(
+                                  'No open tabs',
+                                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                                ),
+                              )
                           : TabSwitcherTabGrid(widget.controller),
                     ),
                     ...widget.switcherFooterBuilder != null ? [widget.switcherFooterBuilder!.call(context)] : [],

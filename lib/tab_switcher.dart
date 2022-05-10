@@ -1,3 +1,2 @@
-void main(List<String> arguments) {
-  print('Hello world!');
-}
+export 'tab_switcher_controller.dart';
+export 'tab_switcher_impl.dart';

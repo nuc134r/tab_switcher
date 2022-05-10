@@ -19,7 +19,7 @@ class TabCountIcon extends StatelessWidget {
             Container(
               height: 18,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(color: IconTheme.of(context).color ?? Colors.white, width: 2),
                 borderRadius: BorderRadius.all(
                   Radius.circular(4),
                 ),
