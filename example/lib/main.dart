@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: ThemeData(primarySwatch: Colors.blue, brightness: DemoSettings.brightness),
             home: const MyHomePage(),
+            debugShowCheckedModeBanner: false,
           );
         },
       );
@@ -62,19 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 foregroundColor: Theme.of(context).textTheme.bodyText1!.color,
                 titleSpacing: 8,
-                title: IntrinsicWidth(
-                  child: MaterialButton(
-                    visualDensity: VisualDensity.compact,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.add),
-                        SizedBox(width: 8),
-                        Text('New tab'),
-                      ],
-                    ),
-                    onPressed: () => controller.pushTab(CounterTab(), foreground: DemoSettings.openTabsInForeground),
-                  ),
-                ),
+                title: NewTabButton(controller: controller),
                 actions: [
                   TabCountIcon(controller: controller),
                   DemoSettingsPopupButton(controller: controller),
@@ -85,6 +74,32 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   late TabSwitcherController controller;
+}
+
+class NewTabButton extends StatelessWidget {
+  const NewTabButton({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final TabSwitcherController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+      child: MaterialButton(
+        visualDensity: VisualDensity.compact,
+        child: Row(
+          children: const [
+            Icon(Icons.add),
+            SizedBox(width: 8),
+            Text('New tab'),
+          ],
+        ),
+        onPressed: () => controller.pushTab(CounterTab(), foreground: DemoSettings.openTabsInForeground),
+      ),
+    );
+  }
 }
 
 class DemoSettingsPopupButton extends StatelessWidget {
