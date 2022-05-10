@@ -6,7 +6,7 @@ Framework for building apps with fullscreen tab based UI in a way Chrome for And
 
 Building a smartphone IDE? Developing yet another internet browser? Designing a very complex app with dozens of screens that need to be shown simultaneously? 
 
-Then you came to the right place. Wrap your screens in tabs to offer rich multitasking experience for your users!
+Then you came to the right place. Wrap your screens in tabs to offer rich multitasking experience to your users!
 
 ## Screenshot
 <img src="https://user-images.githubusercontent.com/13202642/167720635-e540360b-8f99-4f30-a47b-39493f8f7a31.png#gh-light-mode-only" width="450" align="center">
