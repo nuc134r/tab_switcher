@@ -92,7 +92,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
   @override
   Widget build(BuildContext context) {
     var noTabs = widget.controller.tabCount == 0;
-    var displaySwitcher = (noTabs || widget.controller.switcherActive);
+    var displaySwitcher = widget.controller.switcherActive;
     final backgroundColor = widget.backgroundColor ?? Theme.of(context).scaffoldBackgroundColor;
 
     return Container(

@@ -99,12 +99,15 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: _tab.previewImage == null
-                                ? Center(
-                                    child: Text(
-                                      'No preview',
-                                      style: TextStyle(
-                                        color: colorScheme.onSurface.withOpacity(0.5),
-                                        fontSize: 10,
+                                ? Container(
+                                    color: colorScheme.surface,
+                                    child: Center(
+                                      child: Text(
+                                        'No preview',
+                                        style: TextStyle(
+                                          color: colorScheme.onSurface.withOpacity(0.5),
+                                          fontSize: 10,
+                                        ),
                                       ),
                                     ),
                                   )

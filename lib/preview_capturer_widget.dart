@@ -38,7 +38,7 @@ class _PreviewCapturerWidgetState extends State<PreviewCapturerWidget> {
       var retries = 3;
       do {
         try {
-          ui.Image image = await boundary.toImage(pixelRatio: 1);
+          ui.Image image = await boundary.toImage(pixelRatio: 1.5);
           widget.callback(image);
           return;
         } catch (e) {

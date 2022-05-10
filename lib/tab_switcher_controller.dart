@@ -27,7 +27,7 @@ class TabSwitcherController {
 
   void toggleTabSwitcher() => switcherActive = !switcherActive;
 
-  bool get switcherActive => _switcherActive;
+  bool get switcherActive => _switcherActive ?? (_switcherActive = _tabs.isEmpty);
   set switcherActive(bool value) {
     if (value == false && tabCount == 0) return; // switcher cannot be exited when there are no tabs
     if (_switcherActive != value) {
@@ -37,9 +37,9 @@ class TabSwitcherController {
   }
 
   void pushTab(TabSwitcherTab tab, {int index = 0, bool foreground = true}) {
-    if (_tabs.isEmpty) {
-      foreground = true;
-    }
+    //if (_tabs.isEmpty) {
+    //  foreground = true;
+    //}
 
     _tabs.add(tab);
     tab._index = _tabs.length - 1;
@@ -47,9 +47,9 @@ class TabSwitcherController {
     if (foreground) {
       _currentTab?.onSave(_currentTab!._state);
       _currentTab = tab;
-      if (_switcherActive) {
+      if (_switcherActive == true) {
         _switcherActive = false;
-        _switchModeSubject.add(_switcherActive);
+        _switchModeSubject.add(_switcherActive!);
       }
       _currentTabChangedSubject.sink.add(_currentTab);
     }
@@ -70,9 +70,9 @@ class TabSwitcherController {
         _currentTab = _tabs.last;
       } else {
         _currentTab = null;
-        if (!_switcherActive) {
+        if (_switcherActive == false) {
           _switcherActive = true;
-          _switchModeSubject.add(_switcherActive);
+          _switchModeSubject.add(_switcherActive!);
         }
       }
       _currentTabChangedSubject.sink.add(_currentTab);
@@ -96,11 +96,11 @@ class TabSwitcherController {
   TabSwitcherTab? _currentTab;
   final List<TabSwitcherTab> _tabs = [];
 
-  bool _switcherActive = false;
+  bool? _switcherActive;
 
   final StreamController<TabSwitcherTab> _newTabSubject = StreamController<TabSwitcherTab>.broadcast();
   final StreamController<TabSwitcherTab> _tabClosedSubject = StreamController<TabSwitcherTab>.broadcast();
-  final StreamController<TabSwitcherTab?> _currentTabChangedSubject = StreamController<TabSwitcherTab>.broadcast();
+  final StreamController<TabSwitcherTab?> _currentTabChangedSubject = StreamController<TabSwitcherTab?>.broadcast();
   final StreamController<bool> _switchModeSubject = StreamController<bool>.broadcast();
 }
 
