@@ -8,6 +8,7 @@ import 'package:tab_switcher/tab_switcher_tab_grid.dart';
 
 typedef TabWidgetBuilder = Widget Function(BuildContext context, TabSwitcherTab? tab);
 
+/// Root widget for building apps with full screen tabs
 class TabSwitcherWidget extends StatefulWidget {
   TabSwitcherWidget({
     required this.controller,

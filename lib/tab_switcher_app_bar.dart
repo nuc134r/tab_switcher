@@ -4,6 +4,7 @@ import 'package:tab_switcher/tab_switcher_controller.dart';
 import 'package:tab_switcher/tab_switcher_impl.dart';
 import 'package:tab_switcher/utils/responsive_page_view_scroll_physics.dart';
 
+/// Wraps supplied app bar builder to add gesture support, animations and transitions
 class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
   TabSwitcherAppBar(
     this.builder,

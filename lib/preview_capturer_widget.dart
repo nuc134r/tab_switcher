@@ -2,11 +2,12 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:tab_switcher/tab_switcher_controller.dart';
 
-typedef TabWidgetBuilder = Widget Function(BuildContext context, TabSwitcherTab tab, int index);
 typedef ImageCaptureCallback = void Function(ui.Image image);
 
+/// Generates image from child widget right before detaching from the widget tree
+/// and calls callback with the captured image
+/// TODO Customizable image quality (pixelRatio)
 class PreviewCapturerWidget extends StatefulWidget {
   PreviewCapturerWidget({required this.child, required this.callback, required this.tag});
 

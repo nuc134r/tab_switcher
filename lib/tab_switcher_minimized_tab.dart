@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 import 'package:tab_switcher/ui_image_widget.dart';
 
+/// A widget representing single minimized tab.
+/// Consists of title, subtitle, preview image and a close button.
+/// Implements swipe to dismiss on it's own.
 class TabSwitcherMinimizedTab extends StatelessWidget {
   TabSwitcherMinimizedTab(this._tab, this.onTap, this.onClose, this._isCurrent);
 

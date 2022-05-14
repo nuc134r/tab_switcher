@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+/// Renders [ui.Image] data faster than encoding and displaying in [Image.memory].
 class UiImageWidget extends StatelessWidget {
   final ui.Image image;
   final BoxFit fit;

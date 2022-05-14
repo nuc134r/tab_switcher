@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tab_switcher/tab_switcher_controller.dart';
 
+/// Reusable button which shows supplied [TabSwitcherController]'s tab count
+/// and triggers tab switching if tapped. For use in AppBar.
 class TabCountIcon extends StatelessWidget {
   const TabCountIcon({required this.controller, Key? key}) : super(key: key);
 

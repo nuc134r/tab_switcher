@@ -5,6 +5,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// Main controller of the tab switcher.
+/// Opens new tabs, closes tabs, switches tabs programmatically.
+/// Provides streams for common events.
 class TabSwitcherController {
   int get tabCount => _tabs.length;
   UnmodifiableListView<TabSwitcherTab> get tabs => UnmodifiableListView(_tabs);
