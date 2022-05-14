@@ -11,8 +11,9 @@ class AnimatedGrid<T> extends StatelessWidget {
     required this.items,
     required this.keyBuilder,
     required this.builder,
+    this.padding = 8,
     this.columns = 2,
-    this.duration = const Duration(milliseconds: 750),
+    this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.elasticOut,
   }) : super(key: key);
 
@@ -30,6 +31,9 @@ class AnimatedGrid<T> extends StatelessWidget {
 
   /// The height of each child.
   final double itemHeight;
+
+  /// The height of each child.
+  final double padding;
 
   /// The duration of the sort animation.
   final Duration duration;
@@ -57,9 +61,9 @@ class AnimatedGrid<T> extends StatelessWidget {
         final width = constraints.maxWidth;
 
         final count = items.length;
-        final itemWidth = width / columns;
+        final itemWidth = (width / columns) - padding / columns;
         final rows = _rows(columns, count);
-        final gridHeight = rows * itemHeight;
+        final gridHeight = rows * itemHeight + (padding * count);
 
         return SizedBox(
           height: gridHeight,
@@ -76,7 +80,8 @@ class AnimatedGrid<T> extends StatelessWidget {
 
                     final xIndex = indicies.first;
                     final yIndex = indicies.last;
-                    final offset = Offset(xIndex * itemWidth, yIndex * itemHeight);
+                    final offset =
+                        Offset(xIndex * itemWidth + xIndex * padding, yIndex * itemHeight + yIndex * padding);
 
                     return TweenAnimationBuilder<Offset>(
                       tween: Tween<Offset>(end: offset),

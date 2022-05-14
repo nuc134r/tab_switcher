@@ -23,19 +23,22 @@ class _TabSwitcherTabGridState extends State<TabSwitcherTabGrid> {
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Scrollbar(
-          child: AnimatedGrid<TabSwitcherTab>(
-            items: widget.controller.tabs.toList(),
-            itemHeight: TabSwitcherTabGrid.kTabHeight,
-            keyBuilder: (t) => t.key,
-            builder: (context, tab, details) => TabSwitcherMinimizedTab(
-              tab,
-              () => widget.controller.switchToTab(details.index),
-              () => widget.controller.closeTab(widget.controller.tabs[details.index]),
-              tab == widget.controller.currentTab,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AnimatedGrid<TabSwitcherTab>(
+              items: widget.controller.tabs.toList(),
+              itemHeight: TabSwitcherTabGrid.kTabHeight,
+              keyBuilder: (t) => t.key,
+              builder: (context, tab, details) => TabSwitcherMinimizedTab(
+                tab,
+                () => widget.controller.switchToTab(details.index),
+                () => widget.controller.closeTab(widget.controller.tabs[details.index]),
+                tab == widget.controller.currentTab,
+              ),
+              columns: 2,
+              curve: Curves.ease,
+              duration: Duration(milliseconds: 175),
             ),
-            columns: 2,
-            curve: Curves.ease,
-            duration: Duration(milliseconds: 175),
           ),
         ),
       ),

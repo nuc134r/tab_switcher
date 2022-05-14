@@ -94,7 +94,8 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
   Widget build(BuildContext context) {
     var noTabs = widget.controller.tabCount == 0;
     var displaySwitcher = widget.controller.switcherActive;
-    final backgroundColor = widget.backgroundColor ?? Theme.of(context).scaffoldBackgroundColor;
+    var theme = Theme.of(context);
+    final backgroundColor = widget.backgroundColor ?? theme.scaffoldBackgroundColor;
 
     return Container(
       color: backgroundColor,
@@ -118,7 +119,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                               Center(
                                 child: Text(
                                   'No open tabs',
-                                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                                  style: TextStyle(color: theme.colorScheme.onSurface),
                                 ),
                               )
                           : TabSwitcherTabGrid(widget.controller),
