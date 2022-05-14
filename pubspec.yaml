@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  scroll_shadow_container: ^2.0.1
+  scroll_shadow_container: ^2.1.0
 
 dev_dependencies:
   lints: ^1.0.0
