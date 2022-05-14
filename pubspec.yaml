@@ -1,6 +1,6 @@
 name: tab_switcher
-description: Build your app around tabs just like Chrome for Android 
-version: 1.0.0
+description: Build your complex app around tabs just like Chrome for Android 
+version: 1.0.1
 repository: https://github.com/nuc134r/tab_switcher
 
 environment:
