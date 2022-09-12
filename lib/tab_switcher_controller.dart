@@ -15,7 +15,8 @@ class TabSwitcherController {
 
   Stream<TabSwitcherTab> get onNewTab => _newTabSubject.stream;
   Stream<TabSwitcherTab> get onTabClosed => _tabClosedSubject.stream;
-  Stream<TabSwitcherTab?> get onCurrentTabChanged => _currentTabChangedSubject.stream;
+  Stream<TabSwitcherTab?> get onCurrentTabChanged =>
+      _currentTabChangedSubject.stream;
   Stream<bool> get onSwitchModeChanged => _switchModeSubject.stream;
 
   T? getTab<T>() {
@@ -30,9 +31,11 @@ class TabSwitcherController {
 
   void toggleTabSwitcher() => switcherActive = !switcherActive;
 
-  bool get switcherActive => _switcherActive ?? (_switcherActive = _tabs.isEmpty);
+  bool get switcherActive =>
+      _switcherActive ?? (_switcherActive = _tabs.isEmpty);
   set switcherActive(bool value) {
-    if (value == false && tabCount == 0) return; // switcher cannot be exited when there are no tabs
+    if (value == false && tabCount == 0)
+      return; // switcher cannot be exited when there are no tabs
     if (_switcherActive != value) {
       _switcherActive = value;
       _switchModeSubject.add(value);
@@ -101,10 +104,11 @@ class TabSwitcherController {
 
   bool? _switcherActive;
 
-  final StreamController<TabSwitcherTab> _newTabSubject = StreamController<TabSwitcherTab>.broadcast();
-  final StreamController<TabSwitcherTab> _tabClosedSubject = StreamController<TabSwitcherTab>.broadcast();
-  final StreamController<TabSwitcherTab?> _currentTabChangedSubject = StreamController<TabSwitcherTab?>.broadcast();
-  final StreamController<bool> _switchModeSubject = StreamController<bool>.broadcast();
+  final _newTabSubject = StreamController<TabSwitcherTab>.broadcast();
+  final _tabClosedSubject = StreamController<TabSwitcherTab>.broadcast();
+  final _currentTabChangedSubject =
+      StreamController<TabSwitcherTab?>.broadcast();
+  final _switchModeSubject = StreamController<bool>.broadcast();
 }
 
 abstract class TabSwitcherTab {
@@ -116,6 +120,7 @@ abstract class TabSwitcherTab {
 
   Widget build(TabState state);
   void onSave(TabState state);
+  TabState onLoad() => TabState();
 
   Widget getContent() => _content ??= build(_state);
 

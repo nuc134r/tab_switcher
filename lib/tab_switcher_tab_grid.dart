@@ -6,9 +6,11 @@ import 'package:tab_switcher/tab_switcher_minimized_tab.dart';
 
 /// Displays grid of minimized tabs
 class TabSwitcherTabGrid extends StatefulWidget {
-  TabSwitcherTabGrid(this.controller);
+  TabSwitcherTabGrid(this.controller, this.foregroundColor, this.selectedColor);
 
   final TabSwitcherController controller;
+  final Color? foregroundColor;
+  final Color? selectedColor;
 
   static double kTabHeight = 256;
 
@@ -32,8 +34,11 @@ class _TabSwitcherTabGridState extends State<TabSwitcherTabGrid> {
               builder: (context, tab, details) => TabSwitcherMinimizedTab(
                 tab,
                 () => widget.controller.switchToTab(details.index),
-                () => widget.controller.closeTab(widget.controller.tabs[details.index]),
+                () => widget.controller
+                    .closeTab(widget.controller.tabs[details.index]),
                 tab == widget.controller.currentTab,
+                widget.foregroundColor,
+                widget.selectedColor,
               ),
               columns: 2,
               curve: Curves.ease,
