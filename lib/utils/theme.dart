@@ -8,6 +8,9 @@ class TabSwitcherThemeData {
     this.foregroundColor,
     this.selectedTabColor,
     this.unselectedTabColor,
+    this.tabShadowColor,
+    this.appBarBackgroundColor,
+    this.appBarForegroundColor,
     this.appBarHeight = 56,
     this.tabGridHeight = 256,
     this.tabListHeight = 148,
@@ -15,12 +18,17 @@ class TabSwitcherThemeData {
     this.bodyBuilder,
     this.emptyScreenBuilder,
     this.switcherFooterBuilder,
+    this.tabRadius,
+    this.emptyTabsText = 'No open tabs',
   });
 
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Color? selectedTabColor;
   final Color? unselectedTabColor;
+  final Color? tabShadowColor;
+  final Color? appBarBackgroundColor;
+  final Color? appBarForegroundColor;
   final int appBarHeight;
   final double tabGridHeight;
   final double tabListHeight;
@@ -28,6 +36,8 @@ class TabSwitcherThemeData {
   final TabWidgetBuilder? bodyBuilder;
   final WidgetBuilder? emptyScreenBuilder;
   final WidgetBuilder? switcherFooterBuilder;
+  final BorderRadiusGeometry? tabRadius;
+  final String emptyTabsText;
 
   @override
   bool operator ==(Object other) {
@@ -38,13 +48,18 @@ class TabSwitcherThemeData {
       other.foregroundColor == foregroundColor &&
       other.selectedTabColor == selectedTabColor &&
       other.unselectedTabColor == unselectedTabColor &&
+      other.tabShadowColor == tabShadowColor &&
+      other.appBarBackgroundColor == appBarBackgroundColor &&
+      other.appBarForegroundColor == appBarForegroundColor &&
       other.appBarHeight == appBarHeight &&
       other.tabGridHeight == tabGridHeight &&
       other.tabListHeight == tabListHeight &&
       other.appBarBuilder == appBarBuilder &&
       other.bodyBuilder == bodyBuilder &&
       other.emptyScreenBuilder == emptyScreenBuilder &&
-      other.switcherFooterBuilder == switcherFooterBuilder;
+      other.switcherFooterBuilder == switcherFooterBuilder &&
+      other.tabRadius == tabRadius &&
+      other.emptyTabsText == emptyTabsText;
   }
 
   @override
@@ -53,13 +68,18 @@ class TabSwitcherThemeData {
       foregroundColor.hashCode ^
       selectedTabColor.hashCode ^
       unselectedTabColor.hashCode ^
+      tabShadowColor.hashCode ^
+      appBarBackgroundColor.hashCode ^
+      appBarForegroundColor.hashCode ^
       appBarHeight.hashCode ^
       tabGridHeight.hashCode ^
       tabListHeight.hashCode ^
       appBarBuilder.hashCode ^
       bodyBuilder.hashCode ^
       emptyScreenBuilder.hashCode ^
-      switcherFooterBuilder.hashCode;
+      switcherFooterBuilder.hashCode ^
+      tabRadius.hashCode ^
+      emptyTabsText.hashCode;
   }
 }
 

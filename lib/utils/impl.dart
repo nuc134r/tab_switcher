@@ -115,9 +115,11 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                             ? wTheme.emptyScreenBuilder?.call(context) ??
                                 Center(
                                   child: Text(
-                                    'No open tabs',
+                                    wTheme.emptyTabsText,
                                     style: TextStyle(
-                                        color: theme.colorScheme.onSurface),
+                                      color: wTheme.foregroundColor ??
+                                          theme.colorScheme.onSurface,
+                                    ),
                                   ),
                                 )
                             : TabSwitcherTabGrid(widget.controller),

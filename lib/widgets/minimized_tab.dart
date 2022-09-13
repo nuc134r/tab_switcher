@@ -43,10 +43,10 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: _isCurrent ? sTabColor : usTabColor,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: wTheme.tabRadius ?? BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: colors.shadow.withOpacity(0.12),
+                color: wTheme.tabShadowColor ?? colors.shadow.withOpacity(0.12),
                 spreadRadius: 1.5,
                 blurRadius: 4,
               ),
@@ -63,8 +63,9 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                       child: Text(
                         title,
                         style: TextStyle(
-                            fontSize: 14,
-                            color: _isCurrent ? sTabText : usTabText),
+                          fontSize: 14,
+                          color: _isCurrent ? sTabText : usTabText,
+                        ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -91,7 +92,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                   : [
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 8, right: 8, top: 0, bottom: 2),
+                          left: 8,
+                          right: 8,
+                          top: 0,
+                          bottom: 2,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -99,10 +104,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                               child: Text(
                                 subtitle,
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    color: _isCurrent
-                                        ? sTabText.withOpacity(0.5)
-                                        : usTabText.withOpacity(0.5)),
+                                  fontSize: 12,
+                                  color: _isCurrent
+                                      ? sTabText.withOpacity(0.5)
+                                      : usTabText.withOpacity(0.5),
+                                ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -135,7 +141,8 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                                 )
                               : UiImageWidget(
                                   image: _tab.previewImage!,
-                                  fit: BoxFit.fitWidth),
+                                  fit: BoxFit.fitWidth,
+                                ),
                         ),
                       ),
                     ],

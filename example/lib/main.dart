@@ -3,12 +3,6 @@ import 'package:tab_switcher/widgets/tab_count_icon.dart';
 import 'package:tab_switcher/tab_switcher.dart';
 import 'package:tab_switcher_example/counter_tab.dart';
 
-class DemoSettings {
-  static bool openTabsInForeground = true;
-  static Brightness brightness = Brightness.light;
-  static VoidCallback rebuildRootWidget = () {};
-}
-
 void main() {
   runApp(const MyApp());
 }
@@ -17,20 +11,29 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => StatefulBuilder(
-        builder: (context, setState) {
-          DemoSettings.rebuildRootWidget = () => setState(() {});
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-              brightness: DemoSettings.brightness,
-            ),
-            home: const MyHomePage(),
-            debugShowCheckedModeBanner: false,
-          );
-        },
-      );
+  Widget build(BuildContext context) {
+    const Color source = Colors.blue;
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: source,
+          brightness: Brightness.light,
+        ),
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: source,
+          brightness: Brightness.dark,
+        ),
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.light,
+      home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -49,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
     return Scaffold(
       body: TabSwitcherWidget(
         controller: controller,
@@ -59,22 +64,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text(tab.getTitle()),
                   actions: [
                     TabCountIcon(controller: controller),
-                    DemoSettingsPopupButton(controller: controller),
                   ],
                 )
               : AppBar(
                   elevation: 0,
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  foregroundColor: Theme.of(context).textTheme.bodyText1!.color,
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                  foregroundColor: theme.textTheme.bodyLarge!.color,
                   titleSpacing: 8,
-                  title: NewTabButton(controller: controller),
+                  leading: NewTabButton(controller: controller),
+                  leadingWidth: 120,
                   actions: [
                     TabCountIcon(controller: controller),
-                    DemoSettingsPopupButton(controller: controller),
                   ],
                 ),
-          backgroundColor: Colors.black12,
-          foregroundColor: Colors.white,
+          backgroundColor: colors.surface,
+          foregroundColor: colors.onSurface,
+          appBarBackgroundColor: colors.inverseSurface,
+          appBarForegroundColor: colors.onInverseSurface,
+          selectedTabColor: colors.tertiary,
         ),
       ),
     );
@@ -103,43 +110,11 @@ class NewTabButton extends StatelessWidget {
             Text('New tab'),
           ],
         ),
-        onPressed: () => controller.pushTab(CounterTab(),
-            foreground: DemoSettings.openTabsInForeground),
+        onPressed: () => controller.pushTab(
+          CounterTab(),
+          foreground: true,
+        ),
       ),
     );
   }
-}
-
-class DemoSettingsPopupButton extends StatelessWidget {
-  const DemoSettingsPopupButton({required this.controller, Key? key})
-      : super(key: key);
-
-  final TabSwitcherController controller;
-
-  @override
-  Widget build(BuildContext context) => PopupMenuButton(
-        itemBuilder: (BuildContext context) => [
-          PopupMenuItem<String>(
-            value: 'foreground',
-            child: Text('Open tabs in background: ' +
-                (!DemoSettings.openTabsInForeground).toString()),
-          ),
-          const PopupMenuItem<String>(
-            value: 'theme',
-            child: Text('Toggle theme'),
-          ),
-        ],
-        onSelected: (v) {
-          if (v == "theme") {
-            DemoSettings.brightness = DemoSettings.brightness == Brightness.dark
-                ? Brightness.light
-                : Brightness.dark;
-            DemoSettings.rebuildRootWidget();
-          }
-          if (v == "foreground") {
-            DemoSettings.openTabsInForeground =
-                !DemoSettings.openTabsInForeground;
-          }
-        },
-      );
 }
