@@ -9,10 +9,12 @@ Building a smartphone IDE? Developing yet another internet browser? Designing a 
 Then you came to the right place. Wrap your screens in tabs to offer rich multitasking experience to your users!
 
 ## Screenshot
-<img src="https://user-images.githubusercontent.com/13202642/168449701-0deec42d-9c54-4581-a56e-eaff855b97ea.png#gh-light-mode-only" width="450" align="center">
-<img src="https://user-images.githubusercontent.com/13202642/168449705-5b86a383-0dbb-477e-bb3c-f409327d7274.png#gh-dark-mode-only" width="450" align="center">
+
+![](screenshots/counter.png)
+![](screenshots/tabs.png)
 
 ## Features
+
 - [x] Gesture support
 * Swipe header horizontally to switch between tabs
 * Swipe header down to open tab grid
