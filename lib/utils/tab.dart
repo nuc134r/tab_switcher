@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-abstract class TabSwitcherTab extends ChangeNotifier {
-  String getTitle();
-  String? getSubtitle() => null;
+abstract class TabSwitcherTab {
+  Widget getTitle();
+  String getTag();
+  Widget? getSubtitle() => null;
 
   Widget build(TabState state);
   void onSave(TabState state);

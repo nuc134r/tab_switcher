@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utils/controller.dart';
 import '../utils/extensions.dart';
 import '../utils/tab.dart';
 import '../utils/theme.dart';
@@ -24,14 +23,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = _tab.getTitle();
-    final subtitle = _tab.getSubtitle();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final wTheme = TabSwitcherTheme.of(context);
     final colorScheme = theme.colorScheme;
     final sTabColor = wTheme.selectedTabColor ?? colorScheme.primary;
-    final sTabText = sTabColor.onColor;
     final usTabColor = wTheme.unselectedTabColor ?? colorScheme.surfaceVariant;
     final usTabText = usTabColor.onColor;
     return Dismissible(
@@ -55,69 +51,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 4, top: 4, bottom: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: _isCurrent ? sTabText : usTabText,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                    GestureDetector(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 2, right: 2),
-                        child: Icon(
-                          Icons.close,
-                          size: 20,
-                          color: _isCurrent
-                              ? sTabText.withOpacity(0.5)
-                              : usTabText.withOpacity(0.5),
-                        ),
-                      ),
-                      behavior: HitTestBehavior.opaque,
-                      onTap: onClose,
-                    ),
-                  ],
-                ),
-              ),
-              ...subtitle == null
-                  ? []
-                  : [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 8,
-                          right: 8,
-                          top: 0,
-                          bottom: 2,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                subtitle,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: _isCurrent
-                                      ? sTabText.withOpacity(0.5)
-                                      : usTabText.withOpacity(0.5),
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+              buildTab(context),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.all(4),
@@ -154,6 +88,109 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildTab(BuildContext context) {
+    final title = _tab.getTitle();
+    final subtitle = _tab.getSubtitle();
+    final theme = Theme.of(context);
+    final wTheme = TabSwitcherTheme.of(context);
+    final colorScheme = theme.colorScheme;
+    final sTabColor = wTheme.selectedTabColor ?? colorScheme.primary;
+    final sTabText = sTabColor.onColor;
+    final usTabColor = wTheme.unselectedTabColor ?? colorScheme.surfaceVariant;
+    final usTabText = usTabColor.onColor;
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: 8,
+            right: 4,
+            top: 4,
+            bottom: 0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: _isCurrent ? sTabText : usTabText,
+                  ),
+                  child: title,
+                  // child: Text(
+                  //   title,
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     color: _isCurrent ? sTabText : usTabText,
+                  //   ),
+                  //   overflow: TextOverflow.ellipsis,
+                  //   maxLines: 1,
+                  // ),
+                ),
+              ),
+              GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 2,
+                    right: 2,
+                  ),
+                  child: Icon(
+                    Icons.close,
+                    size: 20,
+                    color: _isCurrent
+                        ? sTabText.withOpacity(0.5)
+                        : usTabText.withOpacity(0.5),
+                  ),
+                ),
+                behavior: HitTestBehavior.opaque,
+                onTap: onClose,
+              ),
+            ],
+          ),
+        ),
+        ...subtitle == null
+            ? []
+            : [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    top: 0,
+                    bottom: 2,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: _isCurrent
+                                ? sTabText.withOpacity(0.5)
+                                : usTabText.withOpacity(0.5),
+                          ),
+                          child: subtitle,
+                          // child: Text(
+                          //   subtitle,
+                          //   style: TextStyle(
+                          //     fontSize: 12,
+                          //     color: _isCurrent
+                          //         ? sTabText.withOpacity(0.5)
+                          //         : usTabText.withOpacity(0.5),
+                          //   ),
+                          //   overflow: TextOverflow.ellipsis,
+                          //   maxLines: 1,
+                          // ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ]
+      ],
     );
   }
 }

@@ -16,6 +16,7 @@ class TabSwitcherThemeData {
     this.tabListHeight = 148,
     this.appBarBuilder,
     this.bodyBuilder,
+    this.tabBuilder,
     this.emptyScreenBuilder,
     this.switcherFooterBuilder,
     this.tabRadius,
@@ -34,6 +35,7 @@ class TabSwitcherThemeData {
   final double tabListHeight;
   final TabWidgetBuilder? appBarBuilder;
   final TabWidgetBuilder? bodyBuilder;
+  final TabWidgetBuilder? tabBuilder;
   final WidgetBuilder? emptyScreenBuilder;
   final WidgetBuilder? switcherFooterBuilder;
   final BorderRadiusGeometry? tabRadius;
@@ -42,44 +44,46 @@ class TabSwitcherThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is TabSwitcherThemeData &&
-      other.backgroundColor == backgroundColor &&
-      other.foregroundColor == foregroundColor &&
-      other.selectedTabColor == selectedTabColor &&
-      other.unselectedTabColor == unselectedTabColor &&
-      other.tabShadowColor == tabShadowColor &&
-      other.appBarBackgroundColor == appBarBackgroundColor &&
-      other.appBarForegroundColor == appBarForegroundColor &&
-      other.appBarHeight == appBarHeight &&
-      other.tabGridHeight == tabGridHeight &&
-      other.tabListHeight == tabListHeight &&
-      other.appBarBuilder == appBarBuilder &&
-      other.bodyBuilder == bodyBuilder &&
-      other.emptyScreenBuilder == emptyScreenBuilder &&
-      other.switcherFooterBuilder == switcherFooterBuilder &&
-      other.tabRadius == tabRadius &&
-      other.emptyTabsText == emptyTabsText;
+        other.backgroundColor == backgroundColor &&
+        other.foregroundColor == foregroundColor &&
+        other.selectedTabColor == selectedTabColor &&
+        other.unselectedTabColor == unselectedTabColor &&
+        other.tabShadowColor == tabShadowColor &&
+        other.appBarBackgroundColor == appBarBackgroundColor &&
+        other.appBarForegroundColor == appBarForegroundColor &&
+        other.appBarHeight == appBarHeight &&
+        other.tabGridHeight == tabGridHeight &&
+        other.tabListHeight == tabListHeight &&
+        other.appBarBuilder == appBarBuilder &&
+        other.bodyBuilder == bodyBuilder &&
+        other.tabBuilder == tabBuilder &&
+        other.emptyScreenBuilder == emptyScreenBuilder &&
+        other.switcherFooterBuilder == switcherFooterBuilder &&
+        other.tabRadius == tabRadius &&
+        other.emptyTabsText == emptyTabsText;
   }
 
   @override
   int get hashCode {
     return backgroundColor.hashCode ^
-      foregroundColor.hashCode ^
-      selectedTabColor.hashCode ^
-      unselectedTabColor.hashCode ^
-      tabShadowColor.hashCode ^
-      appBarBackgroundColor.hashCode ^
-      appBarForegroundColor.hashCode ^
-      appBarHeight.hashCode ^
-      tabGridHeight.hashCode ^
-      tabListHeight.hashCode ^
-      appBarBuilder.hashCode ^
-      bodyBuilder.hashCode ^
-      emptyScreenBuilder.hashCode ^
-      switcherFooterBuilder.hashCode ^
-      tabRadius.hashCode ^
-      emptyTabsText.hashCode;
+        foregroundColor.hashCode ^
+        selectedTabColor.hashCode ^
+        unselectedTabColor.hashCode ^
+        tabShadowColor.hashCode ^
+        appBarBackgroundColor.hashCode ^
+        appBarForegroundColor.hashCode ^
+        appBarHeight.hashCode ^
+        tabGridHeight.hashCode ^
+        tabListHeight.hashCode ^
+        appBarBuilder.hashCode ^
+        bodyBuilder.hashCode ^
+        tabBuilder.hashCode ^
+        emptyScreenBuilder.hashCode ^
+        switcherFooterBuilder.hashCode ^
+        tabRadius.hashCode ^
+        emptyTabsText.hashCode;
   }
 }
 

@@ -37,10 +37,13 @@ class CounterTab extends TabSwitcherTab {
       );
 
   @override
-  String getTitle() => 'Counter';
+  Widget getTitle() => const Text('Counter');
 
   @override
-  String? getSubtitle() => 'Counter tab ' + _tabInstanceNumber.toString();
+  Widget? getSubtitle() => Text('Counter tab ' + _tabInstanceNumber.toString());
+
+  @override
+  String getTag() => 'counter_tab_' + _tabInstanceNumber.toString();
 
   @override
   void onSave(TabState state) {}

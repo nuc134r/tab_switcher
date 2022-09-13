@@ -138,7 +138,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                   itemBuilder: (c, i) {
                     var tab = widget.controller.tabs[i];
                     return PreviewCapturerWidget(
-                      tag: tab.getTitle(),
+                      tag: tab.getTag(),
                       child: wTheme.bodyBuilder?.call(c, tab) ??
                           Column(
                             children: [

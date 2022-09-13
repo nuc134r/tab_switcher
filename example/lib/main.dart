@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           appBarBuilder: (context, tab) => tab != null
               ? AppBar(
                   elevation: 0,
-                  title: Text(tab.getTitle()),
+                  title: tab.getTitle(),
                   actions: [
                     TabCountIcon(controller: controller),
                   ],
