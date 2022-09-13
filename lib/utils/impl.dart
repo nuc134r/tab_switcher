@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../widgets/preview_capturer_widget.dart';
+
 import '../widgets/app_bar.dart';
-import 'controller.dart';
+import '../widgets/preview_capturer_widget.dart';
 import '../widgets/tab_grid.dart';
+import 'controller.dart';
 import 'tab.dart';
 import 'theme.dart';
 

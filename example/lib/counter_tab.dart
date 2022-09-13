@@ -8,7 +8,8 @@ class CounterTab extends TabSwitcherTab {
   }
 
   @override
-  Widget build(TabState state) => StatefulBuilder(
+  Widget build(BuildContext context) => StatefulBuilder(
+        key: key,
         builder: (context, setState) => Container(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: Center(
@@ -20,7 +21,7 @@ class CounterTab extends TabSwitcherTab {
                 ),
                 Text(
                   '$_counter',
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -44,14 +45,6 @@ class CounterTab extends TabSwitcherTab {
 
   @override
   String getTag() => 'counter_tab_' + _tabInstanceNumber.toString();
-
-  @override
-  void onSave(TabState state) {}
-
-  @override
-  TabState onRestore() {
-    return TabState();
-  }
 
   int _counter = 0;
 
