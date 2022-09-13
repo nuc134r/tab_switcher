@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
 import '../utils/controller.dart';
+import '../utils/tab.dart';
 import '../utils/theme.dart';
 import 'animated_grid.dart';
 import 'minimized_tab.dart';

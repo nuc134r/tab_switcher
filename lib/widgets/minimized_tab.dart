@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/controller.dart';
 import '../utils/extensions.dart';
+import '../utils/tab.dart';
 import '../utils/theme.dart';
 import 'ui_image_widget.dart';
 

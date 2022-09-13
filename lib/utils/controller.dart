@@ -5,6 +5,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'tab.dart';
+
 /// Main controller of the tab switcher.
 /// Opens new tabs, closes tabs, switches tabs programmatically.
 /// Provides streams for common events.
@@ -48,10 +50,10 @@ class TabSwitcherController {
     //}
 
     _tabs.add(tab);
-    tab._index = _tabs.length - 1;
+    tab.index = _tabs.length - 1;
 
     if (foreground) {
-      _currentTab?.onSave(_currentTab!._state);
+      _currentTab?.onSave(_currentTab!.state);
       _currentTab = tab;
       if (_switcherActive == true) {
         _switcherActive = false;
@@ -68,7 +70,7 @@ class TabSwitcherController {
 
     var i = 0;
     for (var t in _tabs) {
-      t._index = i++;
+      t.index = i++;
     }
 
     if (_currentTab == tab) {
@@ -89,7 +91,7 @@ class TabSwitcherController {
 
   void switchToTab(int index) {
     if (index >= 0 && index < _tabs.length) {
-      _currentTab?.onSave(_currentTab!._state);
+      _currentTab?.onSave(_currentTab!.state);
       _currentTab = _tabs[index];
       _currentTabChangedSubject.sink.add(_currentTab);
     }
@@ -109,32 +111,4 @@ class TabSwitcherController {
   final _currentTabChangedSubject =
       StreamController<TabSwitcherTab?>.broadcast();
   final _switchModeSubject = StreamController<bool>.broadcast();
-}
-
-abstract class TabSwitcherTab {
-  int get index => _index;
-  Key get key => _key;
-
-  String getTitle();
-  String? getSubtitle() => null;
-
-  Widget build(TabState state);
-  void onSave(TabState state);
-  TabState onLoad() => TabState();
-
-  Widget getContent() => _content ??= build(_state);
-
-  ui.Image? previewImage; // TODO Move out of here
-
-  Widget? _content;
-  late int _index;
-  final UniqueKey _key = UniqueKey();
-  final TabState _state = TabState();
-}
-
-class TabState {
-  void set(String id, dynamic content) => _items[id] = content;
-  T get<T>(String id) => _items[id] as T;
-
-  final Map<String, dynamic> _items = <String, dynamic>{};
 }

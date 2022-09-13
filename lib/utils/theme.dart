@@ -29,7 +29,7 @@ class TabSwitcherThemeData {
   final Color? tabShadowColor;
   final Color? appBarBackgroundColor;
   final Color? appBarForegroundColor;
-  final int appBarHeight;
+  final double appBarHeight;
   final double tabGridHeight;
   final double tabListHeight;
   final TabWidgetBuilder? appBarBuilder;
