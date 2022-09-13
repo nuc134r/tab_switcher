@@ -6,7 +6,8 @@ class TabSwitcherThemeData {
   const TabSwitcherThemeData({
     this.backgroundColor,
     this.foregroundColor,
-    this.selectedColor,
+    this.selectedTabColor,
+    this.unselectedTabColor,
     this.appBarHeight = 56,
     this.tabGridHeight = 256,
     this.tabListHeight = 148,
@@ -18,7 +19,8 @@ class TabSwitcherThemeData {
 
   final Color? backgroundColor;
   final Color? foregroundColor;
-  final Color? selectedColor;
+  final Color? selectedTabColor;
+  final Color? unselectedTabColor;
   final int appBarHeight;
   final double tabGridHeight;
   final double tabListHeight;
@@ -30,24 +32,34 @@ class TabSwitcherThemeData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is TabSwitcherThemeData &&
-        other.backgroundColor == backgroundColor &&
-        other.foregroundColor == foregroundColor &&
-        other.selectedColor == selectedColor &&
-        other.appBarHeight == appBarHeight &&
-        other.tabGridHeight == tabGridHeight &&
-        other.tabListHeight == tabListHeight;
+      other.backgroundColor == backgroundColor &&
+      other.foregroundColor == foregroundColor &&
+      other.selectedTabColor == selectedTabColor &&
+      other.unselectedTabColor == unselectedTabColor &&
+      other.appBarHeight == appBarHeight &&
+      other.tabGridHeight == tabGridHeight &&
+      other.tabListHeight == tabListHeight &&
+      other.appBarBuilder == appBarBuilder &&
+      other.bodyBuilder == bodyBuilder &&
+      other.emptyScreenBuilder == emptyScreenBuilder &&
+      other.switcherFooterBuilder == switcherFooterBuilder;
   }
 
   @override
   int get hashCode {
     return backgroundColor.hashCode ^
-        foregroundColor.hashCode ^
-        selectedColor.hashCode ^
-        appBarHeight.hashCode ^
-        tabGridHeight.hashCode ^
-        tabListHeight.hashCode;
+      foregroundColor.hashCode ^
+      selectedTabColor.hashCode ^
+      unselectedTabColor.hashCode ^
+      appBarHeight.hashCode ^
+      tabGridHeight.hashCode ^
+      tabListHeight.hashCode ^
+      appBarBuilder.hashCode ^
+      bodyBuilder.hashCode ^
+      emptyScreenBuilder.hashCode ^
+      switcherFooterBuilder.hashCode;
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/controller.dart';
+import '../utils/extensions.dart';
 import '../utils/theme.dart';
 import 'ui_image_widget.dart';
 
@@ -24,15 +25,14 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = _tab.getTitle();
     final subtitle = _tab.getSubtitle();
-    final wTheme = TabSwitcherTheme.of(context);
     final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    final wTheme = TabSwitcherTheme.of(context);
     final colorScheme = theme.colorScheme;
-    final bgColor = wTheme.foregroundColor ?? colorScheme.onSurface;
-    final fgColor =
-        bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-    final pColor = wTheme.selectedColor ?? colorScheme.primary;
-    final onPColor =
-        pColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+    final sTabColor = wTheme.selectedTabColor ?? colorScheme.primary;
+    final sTabText = sTabColor.onColor;
+    final usTabColor = wTheme.unselectedTabColor ?? colorScheme.surfaceVariant;
+    final usTabText = usTabColor.onColor;
     return Dismissible(
       movementDuration: Duration(milliseconds: 1),
       resizeDuration: Duration(milliseconds: 1),
@@ -42,11 +42,11 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: _isCurrent ? pColor : bgColor,
+            color: _isCurrent ? sTabColor : usTabColor,
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: colors.shadow.withOpacity(0.12),
                 spreadRadius: 1.5,
                 blurRadius: 4,
               ),
@@ -64,7 +64,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                         title,
                         style: TextStyle(
                             fontSize: 14,
-                            color: _isCurrent ? onPColor : fgColor),
+                            color: _isCurrent ? sTabText : usTabText),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -76,8 +76,8 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                           Icons.close,
                           size: 20,
                           color: _isCurrent
-                              ? onPColor.withOpacity(0.5)
-                              : fgColor.withOpacity(0.5),
+                              ? sTabText.withOpacity(0.5)
+                              : usTabText.withOpacity(0.5),
                         ),
                       ),
                       behavior: HitTestBehavior.opaque,
@@ -101,8 +101,8 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: _isCurrent
-                                        ? onPColor.withOpacity(0.5)
-                                        : fgColor.withOpacity(0.5)),
+                                        ? sTabText.withOpacity(0.5)
+                                        : usTabText.withOpacity(0.5)),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -127,7 +127,7 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
                                     child: Text(
                                       'No preview',
                                       style: TextStyle(
-                                        color: fgColor.withOpacity(0.5),
+                                        color: usTabText.withOpacity(0.5),
                                         fontSize: 10,
                                       ),
                                     ),
