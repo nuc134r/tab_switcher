@@ -8,6 +8,10 @@ Building a smartphone IDE? Developing yet another internet browser? Designing a 
 
 Then you came to the right place. Wrap your screens in tabs to offer rich multitasking experience to your users!
 
+## Demo
+
+[Github Pages](https://hymns-for-worship.github.io/tab_switcher/)
+
 ## Screenshot
 
 ![](screenshots/counter.png)
