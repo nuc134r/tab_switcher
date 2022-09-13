@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:tab_switcher/widgets/tab_count_icon.dart';
-import '../controller.dart';
-import '../impl.dart';
+
+import '../utils/controller.dart';
 import '../utils/responsive_page_view_scroll_physics.dart';
-import 'theme.dart';
+import '../utils/theme.dart';
+import 'tab_count_icon.dart';
 
 /// Wraps supplied app bar builder to add gesture support, animations and transitions
 class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {

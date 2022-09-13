@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../impl.dart';
+import 'impl.dart';
 
 class TabSwitcherThemeData {
   const TabSwitcherThemeData({

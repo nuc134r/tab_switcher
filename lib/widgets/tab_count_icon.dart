@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../controller.dart';
+import '../utils/controller.dart';
 
 /// Reusable button which shows supplied [TabSwitcherController]'s tab count
 /// and triggers tab switching if tapped. For use in AppBar.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../controller.dart';
-import 'theme.dart';
+import '../utils/controller.dart';
+import '../utils/theme.dart';
 import 'ui_image_widget.dart';
 
 /// A widget representing single minimized tab.

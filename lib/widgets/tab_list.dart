@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
-import '../controller.dart';
+import '../utils/controller.dart';
+import '../utils/theme.dart';
 import 'minimized_tab.dart';
-import 'theme.dart';
 
 /// Displays list of minimized tabs
 class TabSwitcherTabList extends StatefulWidget {
