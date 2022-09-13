@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../impl.dart';
+
 class TabSwitcherThemeData {
   const TabSwitcherThemeData({
     this.backgroundColor,
@@ -8,6 +10,10 @@ class TabSwitcherThemeData {
     this.appBarHeight = 56,
     this.tabGridHeight = 256,
     this.tabListHeight = 148,
+    this.appBarBuilder,
+    this.bodyBuilder,
+    this.emptyScreenBuilder,
+    this.switcherFooterBuilder,
   });
 
   final Color? backgroundColor;
@@ -16,28 +22,32 @@ class TabSwitcherThemeData {
   final int appBarHeight;
   final double tabGridHeight;
   final double tabListHeight;
+  final TabWidgetBuilder? appBarBuilder;
+  final TabWidgetBuilder? bodyBuilder;
+  final WidgetBuilder? emptyScreenBuilder;
+  final WidgetBuilder? switcherFooterBuilder;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is TabSwitcherThemeData &&
-      other.backgroundColor == backgroundColor &&
-      other.foregroundColor == foregroundColor &&
-      other.selectedColor == selectedColor &&
-      other.appBarHeight == appBarHeight &&
-      other.tabGridHeight == tabGridHeight &&
-      other.tabListHeight == tabListHeight;
+        other.backgroundColor == backgroundColor &&
+        other.foregroundColor == foregroundColor &&
+        other.selectedColor == selectedColor &&
+        other.appBarHeight == appBarHeight &&
+        other.tabGridHeight == tabGridHeight &&
+        other.tabListHeight == tabListHeight;
   }
 
   @override
   int get hashCode {
     return backgroundColor.hashCode ^
-      foregroundColor.hashCode ^
-      selectedColor.hashCode ^
-      appBarHeight.hashCode ^
-      tabGridHeight.hashCode ^
-      tabListHeight.hashCode;
+        foregroundColor.hashCode ^
+        selectedColor.hashCode ^
+        appBarHeight.hashCode ^
+        tabGridHeight.hashCode ^
+        tabListHeight.hashCode;
   }
 }
 

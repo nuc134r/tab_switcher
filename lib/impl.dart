@@ -14,20 +14,11 @@ typedef TabWidgetBuilder = Widget Function(
 class TabSwitcherWidget extends StatefulWidget {
   TabSwitcherWidget({
     required this.controller,
-    required this.appBarBuilder,
     this.theme = const TabSwitcherThemeData(),
-    this.bodyBuilder,
-    this.emptyScreenBuilder,
-    this.switcherFooterBuilder,
   });
 
   final TabSwitcherThemeData theme;
   final TabSwitcherController controller;
-
-  final TabWidgetBuilder? appBarBuilder;
-  final TabWidgetBuilder? bodyBuilder;
-  final WidgetBuilder? emptyScreenBuilder;
-  final WidgetBuilder? switcherFooterBuilder;
 
   @override
   State<TabSwitcherWidget> createState() => _TabSwitcherWidgetState();
@@ -39,10 +30,9 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
   late PageController _bodyPageController;
 
   void initPageControllers() {
-    _appBarPageController =
-        PageController(initialPage: widget.controller.currentTab?.index ?? 0);
-    _bodyPageController =
-        PageController(initialPage: widget.controller.currentTab?.index ?? 0);
+    final idx = widget.controller.currentTab?.index ?? 0;
+    _appBarPageController = PageController(initialPage: idx);
+    _bodyPageController = PageController(initialPage: idx);
 
     _appBarPageController.addListener(() {
       // syncing body PageView with header PageView
@@ -111,12 +101,10 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: TabSwitcherAppBar(
-            widget.appBarBuilder,
             widget.controller,
             _appBarPageController,
             MediaQuery.of(context),
-            wTheme.appBarHeight,
-            backgroundColor,
+            wTheme,
           ),
           body: displaySwitcher
               ? Container(
@@ -124,7 +112,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                     children: [
                       Expanded(
                         child: noTabs
-                            ? widget.emptyScreenBuilder?.call(context) ??
+                            ? wTheme.emptyScreenBuilder?.call(context) ??
                                 Center(
                                   child: Text(
                                     'No open tabs',
@@ -134,8 +122,8 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                                 )
                             : TabSwitcherTabGrid(widget.controller),
                       ),
-                      ...widget.switcherFooterBuilder != null
-                          ? [widget.switcherFooterBuilder!.call(context)]
+                      ...wTheme.switcherFooterBuilder != null
+                          ? [wTheme.switcherFooterBuilder!.call(context)]
                           : [],
                     ],
                   ),
@@ -148,7 +136,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                     var tab = widget.controller.tabs[i];
                     return PreviewCapturerWidget(
                       tag: tab.getTitle(),
-                      child: widget.bodyBuilder?.call(c, tab) ??
+                      child: wTheme.bodyBuilder?.call(c, tab) ??
                           Column(
                             children: [
                               Expanded(

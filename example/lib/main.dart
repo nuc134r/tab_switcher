@@ -51,26 +51,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: TabSwitcherWidget(
         controller: controller,
-        appBarBuilder: (context, tab) => tab != null
-            ? AppBar(
-                elevation: 0,
-                title: Text(tab.getTitle()),
-                actions: [
-                  TabCountIcon(controller: controller),
-                  DemoSettingsPopupButton(controller: controller),
-                ],
-              )
-            : AppBar(
-                elevation: 0,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                foregroundColor: Theme.of(context).textTheme.bodyText1!.color,
-                titleSpacing: 8,
-                title: NewTabButton(controller: controller),
-                actions: [
-                  TabCountIcon(controller: controller),
-                  DemoSettingsPopupButton(controller: controller),
-                ],
-              ),
+        theme: TabSwitcherThemeData(
+          appBarBuilder: (context, tab) => tab != null
+              ? AppBar(
+                  elevation: 0,
+                  title: Text(tab.getTitle()),
+                  actions: [
+                    TabCountIcon(controller: controller),
+                    DemoSettingsPopupButton(controller: controller),
+                  ],
+                )
+              : AppBar(
+                  elevation: 0,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  foregroundColor: Theme.of(context).textTheme.bodyText1!.color,
+                  titleSpacing: 8,
+                  title: NewTabButton(controller: controller),
+                  actions: [
+                    TabCountIcon(controller: controller),
+                    DemoSettingsPopupButton(controller: controller),
+                  ],
+                ),
+        ),
       ),
     );
   }
