@@ -19,7 +19,7 @@ jobs:
       - name: Install
         run: |
           flutter config --enable-web
-          cd example flutter pub get
+          cd example && flutter pub get
       - name: Build
         run: cd example && flutter build web --base-href="/flutter_nested_master_detail/"
 
