@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
-import '../tab_switcher_controller.dart';
+import '../controller.dart';
 import 'animated_grid.dart';
 import 'minimized_tab.dart';
 

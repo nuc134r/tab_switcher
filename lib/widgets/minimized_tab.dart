@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../tab_switcher_controller.dart';
+import '../controller.dart';
 import 'ui_image_widget.dart';
 
 /// A widget representing single minimized tab.

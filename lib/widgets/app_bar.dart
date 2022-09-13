@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../tab_switcher_controller.dart';
-import '../tab_switcher_impl.dart';
+import '../controller.dart';
+import '../impl.dart';
 import '../utils/responsive_page_view_scroll_physics.dart';
 
 /// Wraps supplied app bar builder to add gesture support, animations and transitions
