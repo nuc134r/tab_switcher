@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_shadow_container/scroll_shadow_container.dart';
-import 'package:tab_switcher/animated_grid.dart';
-import 'package:tab_switcher/tab_switcher_controller.dart';
-import 'package:tab_switcher/tab_switcher_minimized_tab.dart';
+
+import '../tab_switcher_controller.dart';
+import 'animated_grid.dart';
+import 'minimized_tab.dart';
 
 /// Displays grid of minimized tabs
 class TabSwitcherTabGrid extends StatefulWidget {

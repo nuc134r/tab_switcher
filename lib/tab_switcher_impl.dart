@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tab_switcher/preview_capturer_widget.dart';
-import 'package:tab_switcher/tab_switcher_app_bar.dart';
-import 'package:tab_switcher/tab_switcher_controller.dart';
-import 'package:tab_switcher/tab_switcher_tab_grid.dart';
+import 'widgets/preview_capturer_widget.dart';
+import 'widgets/app_bar.dart';
+import 'tab_switcher_controller.dart';
+import 'widgets/tab_grid.dart';
 
 typedef TabWidgetBuilder = Widget Function(
     BuildContext context, TabSwitcherTab? tab);
