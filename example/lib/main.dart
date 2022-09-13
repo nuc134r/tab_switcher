@@ -73,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     DemoSettingsPopupButton(controller: controller),
                   ],
                 ),
+          backgroundColor: Colors.black12,
+          foregroundColor: Colors.white,
         ),
       ),
     );
