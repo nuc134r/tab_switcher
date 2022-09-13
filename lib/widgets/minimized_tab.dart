@@ -92,8 +92,9 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
   }
 
   Widget buildTab(BuildContext context) {
-    final title = _tab.getTitle();
-    final subtitle = _tab.getSubtitle();
+    final info = _tab.getInfo(context);
+    final title = info.title;
+    final subtitle = info.subtitle;
     final theme = Theme.of(context);
     final wTheme = TabSwitcherTheme.of(context);
     final colorScheme = theme.colorScheme;

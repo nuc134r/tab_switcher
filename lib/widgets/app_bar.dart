@@ -72,7 +72,7 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
       return theme.appBarBuilder!(context, tab);
     }
     return AppBar(
-      title: tab?.getTitle(),
+      title: tab?.getInfo(context).title,
       actions: [
         TabCountIcon(controller: controller),
       ],

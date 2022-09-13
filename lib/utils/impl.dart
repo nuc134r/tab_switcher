@@ -78,7 +78,6 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
 
   @override
   Widget build(BuildContext context) {
-    var noTabs = controller.tabCount == 0;
     var displaySwitcher = controller.switcherActive;
     var theme = Theme.of(context);
     final wTheme = widget.theme;
@@ -96,55 +95,65 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
             MediaQuery.of(context),
             wTheme,
           ),
-          body: displaySwitcher
-              ? Container(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: noTabs
-                            ? wTheme.emptyScreenBuilder?.call(context) ??
-                                Center(
-                                  child: Text(
-                                    wTheme.emptyTabsText,
-                                    style: TextStyle(
-                                      color: wTheme.foregroundColor ??
-                                          theme.colorScheme.onSurface,
-                                    ),
-                                  ),
-                                )
-                            : TabSwitcherTabGrid(controller),
-                      ),
-                      ...wTheme.switcherFooterBuilder != null
-                          ? [wTheme.switcherFooterBuilder!.call(context)]
-                          : [],
-                    ],
-                  ),
-                )
-              : PageView.builder(
-                  controller: _bodyPageController,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: controller.tabCount,
-                  itemBuilder: (c, i) {
-                    var tab = controller.tabs[i];
-                    return PreviewCapturerWidget(
-                      tag: tab.getTag(),
-                      child: wTheme.bodyBuilder?.call(c, tab) ??
-                          Column(
-                            children: [
-                              Expanded(
-                                child: tab.getContent(context),
-                              ),
-                            ],
-                          ),
-                      callback: (bytes) {
-                        tab.previewImage = bytes;
-                        setState(() {});
-                      },
-                    );
-                  },
-                ),
+          body: displaySwitcher ? buildSwitcher(context) : buildBody(context),
         ),
       ),
+    );
+  }
+
+  Widget buildSwitcher(BuildContext context) {
+    var noTabs = controller.tabCount == 0;
+    var theme = Theme.of(context);
+    final wTheme = widget.theme;
+    return Container(
+      child: Column(
+        children: [
+          Expanded(
+            child: noTabs
+                ? wTheme.emptyScreenBuilder?.call(context) ??
+                    Center(
+                      child: Text(
+                        wTheme.emptyTabsText,
+                        style: TextStyle(
+                          color: wTheme.foregroundColor ??
+                              theme.colorScheme.onSurface,
+                        ),
+                      ),
+                    )
+                : TabSwitcherTabGrid(controller),
+          ),
+          ...wTheme.switcherFooterBuilder != null
+              ? [wTheme.switcherFooterBuilder!.call(context)]
+              : [],
+        ],
+      ),
+    );
+  }
+
+  Widget buildBody(BuildContext context) {
+    final wTheme = widget.theme;
+    return PageView.builder(
+      controller: _bodyPageController,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: controller.tabCount,
+      itemBuilder: (c, i) {
+        var tab = controller.tabs[i];
+        return PreviewCapturerWidget(
+          tag: tab.getInfo(context).tag,
+          child: wTheme.bodyBuilder?.call(c, tab) ??
+              Column(
+                children: [
+                  Expanded(
+                    child: tab.getContent(context),
+                  ),
+                ],
+              ),
+          callback: (bytes) {
+            tab.previewImage = bytes;
+            setState(() {});
+          },
+        );
+      },
     );
   }
 
