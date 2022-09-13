@@ -23,8 +23,8 @@ class TabSwitcherWidget extends StatefulWidget {
     this.onSave,
   });
 
-  final TabSwitcherController Function()? onRestore;
-  final void Function(TabSwitcherController)? onSave;
+  final Future<TabSwitcherController> Function()? onRestore;
+  final Future<void> Function(TabSwitcherController)? onSave;
   final TabSwitcherController controller;
   final TabSwitcherThemeData theme;
 
@@ -57,8 +57,10 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
       case AppLifecycleState.resumed:
         debugPrint('tabs: restore');
         if (widget.onRestore != null) {
-          controller = widget.onRestore!();
-          init();
+          widget.onRestore!().then((value) {
+            controller = value;
+            init();
+          });
         }
         break;
       default:
@@ -118,14 +120,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
         var tab = controller.tabs[i];
         return PreviewCapturerWidget(
           tag: tab.getInfo(context).tag,
-          child: wTheme.bodyBuilder?.call(c, tab) ??
-              Column(
-                children: [
-                  Expanded(
-                    child: tab.getContent(context),
-                  ),
-                ],
-              ),
+          child: wTheme.bodyBuilder?.call(c, tab) ?? tab.getContent(context),
           callback: (bytes) {
             tab.previewImage = bytes;
             setState(() {});
