@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../controller.dart';
+import 'theme.dart';
 import 'ui_image_widget.dart';
 
 /// A widget representing single minimized tab.
@@ -12,27 +13,24 @@ class TabSwitcherMinimizedTab extends StatelessWidget {
     this.onTap,
     this.onClose,
     this._isCurrent,
-    this.foregroundColor,
-    this.selectedColor,
   );
 
   final VoidCallback onClose;
   final VoidCallback onTap;
   final TabSwitcherTab _tab;
   final bool _isCurrent;
-  final Color? foregroundColor;
-  final Color? selectedColor;
 
   @override
   Widget build(BuildContext context) {
     final title = _tab.getTitle();
     final subtitle = _tab.getSubtitle();
+    final wTheme = TabSwitcherTheme.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final bgColor = foregroundColor ?? colorScheme.onSurface;
+    final bgColor = wTheme.foregroundColor ?? colorScheme.onSurface;
     final fgColor =
         bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-    final pColor = selectedColor ?? colorScheme.primary;
+    final pColor = wTheme.selectedColor ?? colorScheme.primary;
     final onPColor =
         pColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
     return Dismissible(

@@ -5,6 +5,7 @@ import 'widgets/preview_capturer_widget.dart';
 import 'widgets/app_bar.dart';
 import 'controller.dart';
 import 'widgets/tab_grid.dart';
+import 'widgets/theme.dart';
 
 typedef TabWidgetBuilder = Widget Function(
     BuildContext context, TabSwitcherTab? tab);
@@ -14,22 +15,34 @@ class TabSwitcherWidget extends StatefulWidget {
   TabSwitcherWidget({
     required this.controller,
     required this.appBarBuilder,
+    this.theme = const TabSwitcherThemeData(),
     this.bodyBuilder,
     this.emptyScreenBuilder,
     this.switcherFooterBuilder,
-    this.appBarHeight = 56,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.selectedColor,
-  }) {
-    initPageControllers();
-  }
+  });
+
+  final TabSwitcherThemeData theme;
+  final TabSwitcherController controller;
+
+  final TabWidgetBuilder? appBarBuilder;
+  final TabWidgetBuilder? bodyBuilder;
+  final WidgetBuilder? emptyScreenBuilder;
+  final WidgetBuilder? switcherFooterBuilder;
+
+  @override
+  State<TabSwitcherWidget> createState() => _TabSwitcherWidgetState();
+}
+
+class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
+  bool _isNavigatingToPage = false;
+  late PageController _appBarPageController;
+  late PageController _bodyPageController;
 
   void initPageControllers() {
     _appBarPageController =
-        PageController(initialPage: controller.currentTab?.index ?? 0);
+        PageController(initialPage: widget.controller.currentTab?.index ?? 0);
     _bodyPageController =
-        PageController(initialPage: controller.currentTab?.index ?? 0);
+        PageController(initialPage: widget.controller.currentTab?.index ?? 0);
 
     _appBarPageController.addListener(() {
       // syncing body PageView with header PageView
@@ -45,51 +58,31 @@ class TabSwitcherWidget extends StatefulWidget {
               _appBarPageController.page!.floorToDouble() &&
           !_isNavigatingToPage) {
         var index = _appBarPageController.page!.floor();
-        if (controller.currentTab != null &&
-            controller.currentTab!.index != index) {
-          controller.switchToTab(index);
+        if (widget.controller.currentTab != null &&
+            widget.controller.currentTab!.index != index) {
+          widget.controller.switchToTab(index);
         }
       }
     });
   }
 
-  late PageController _appBarPageController;
-  late PageController _bodyPageController;
-  bool _isNavigatingToPage = false;
-
-  final TabSwitcherController controller;
-
-  final TabWidgetBuilder? appBarBuilder;
-  final TabWidgetBuilder? bodyBuilder;
-  final WidgetBuilder? emptyScreenBuilder;
-  final WidgetBuilder? switcherFooterBuilder;
-  final Color? backgroundColor;
-  final Color? foregroundColor;
-  final Color? selectedColor;
-
-  final int appBarHeight;
-
-  @override
-  State<TabSwitcherWidget> createState() => _TabSwitcherWidgetState();
-}
-
-class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
   @override
   void initState() {
     super.initState();
+    initPageControllers();
     _sub1 = widget.controller.onTabClosed.listen((e) => setState(() {}));
     _sub2 = widget.controller.onNewTab.listen((e) => setState(() {}));
     _sub3 = widget.controller.onSwitchModeChanged
-        .listen((e) => setState(() => widget.initPageControllers()));
+        .listen((e) => setState(() => initPageControllers()));
     _sub4 = widget.controller.onCurrentTabChanged.listen((e) => setState(() {
           if (widget.controller.switcherActive) {
-            widget.initPageControllers();
+            initPageControllers();
           } else if (widget.controller.currentTab != null &&
-              widget._appBarPageController.positions.isNotEmpty) {
-            widget._isNavigatingToPage = true;
-            widget._appBarPageController
+              _appBarPageController.positions.isNotEmpty) {
+            _isNavigatingToPage = true;
+            _appBarPageController
                 .jumpToPage(widget.controller.currentTab!.index);
-            widget._isNavigatingToPage = false;
+            _isNavigatingToPage = false;
           }
         }));
   }
@@ -108,70 +101,69 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
     var noTabs = widget.controller.tabCount == 0;
     var displaySwitcher = widget.controller.switcherActive;
     var theme = Theme.of(context);
+    final wTheme = widget.theme;
     final backgroundColor =
-        widget.backgroundColor ?? theme.scaffoldBackgroundColor;
-
-    return Container(
-      color: backgroundColor,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: TabSwitcherAppBar(
-          widget.appBarBuilder,
-          widget.controller,
-          widget._appBarPageController,
-          MediaQuery.of(context),
-          widget.appBarHeight,
-          backgroundColor,
-        ),
-        body: displaySwitcher
-            ? Container(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: noTabs
-                          ? widget.emptyScreenBuilder?.call(context) ??
-                              Center(
-                                child: Text(
-                                  'No open tabs',
-                                  style: TextStyle(
-                                      color: theme.colorScheme.onSurface),
-                                ),
-                              )
-                          : TabSwitcherTabGrid(
-                              widget.controller,
-                              widget.foregroundColor,
-                              widget.selectedColor,
-                            ),
-                    ),
-                    ...widget.switcherFooterBuilder != null
-                        ? [widget.switcherFooterBuilder!.call(context)]
-                        : [],
-                  ],
+        wTheme.backgroundColor ?? theme.scaffoldBackgroundColor;
+    return TabSwitcherTheme(
+      data: widget.theme,
+      child: Container(
+        color: backgroundColor,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: TabSwitcherAppBar(
+            widget.appBarBuilder,
+            widget.controller,
+            _appBarPageController,
+            MediaQuery.of(context),
+            wTheme.appBarHeight,
+            backgroundColor,
+          ),
+          body: displaySwitcher
+              ? Container(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: noTabs
+                            ? widget.emptyScreenBuilder?.call(context) ??
+                                Center(
+                                  child: Text(
+                                    'No open tabs',
+                                    style: TextStyle(
+                                        color: theme.colorScheme.onSurface),
+                                  ),
+                                )
+                            : TabSwitcherTabGrid(widget.controller),
+                      ),
+                      ...widget.switcherFooterBuilder != null
+                          ? [widget.switcherFooterBuilder!.call(context)]
+                          : [],
+                    ],
+                  ),
+                )
+              : PageView.builder(
+                  controller: _bodyPageController,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: widget.controller.tabCount,
+                  itemBuilder: (c, i) {
+                    var tab = widget.controller.tabs[i];
+                    return PreviewCapturerWidget(
+                      tag: tab.getTitle(),
+                      child: widget.bodyBuilder?.call(c, tab) ??
+                          Column(
+                            children: [
+                              Expanded(
+                                child: tab.getContent(),
+                              ),
+                            ],
+                          ),
+                      callback: (bytes) {
+                        tab.previewImage = bytes;
+                        setState(() {});
+                      },
+                    );
+                  },
                 ),
-              )
-            : PageView.builder(
-                controller: widget._bodyPageController,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: widget.controller.tabCount,
-                itemBuilder: (c, i) {
-                  var tab = widget.controller.tabs[i];
-                  return PreviewCapturerWidget(
-                    tag: tab.getTitle(),
-                    child: widget.bodyBuilder?.call(c, tab) ??
-                        Column(
-                          children: [
-                            Expanded(
-                              child: tab.getContent(),
-                            ),
-                          ],
-                        ),
-                    callback: (bytes) {
-                      tab.previewImage = bytes;
-                      setState(() {});
-                    },
-                  );
-                },
-              ),
+        ),
       ),
     );
   }

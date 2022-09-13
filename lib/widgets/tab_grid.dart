@@ -4,16 +4,13 @@ import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 import '../controller.dart';
 import 'animated_grid.dart';
 import 'minimized_tab.dart';
+import 'theme.dart';
 
 /// Displays grid of minimized tabs
 class TabSwitcherTabGrid extends StatefulWidget {
-  TabSwitcherTabGrid(this.controller, this.foregroundColor, this.selectedColor);
+  TabSwitcherTabGrid(this.controller);
 
   final TabSwitcherController controller;
-  final Color? foregroundColor;
-  final Color? selectedColor;
-
-  static double kTabHeight = 256;
 
   @override
   State<TabSwitcherTabGrid> createState() => _TabSwitcherTabGridState();
@@ -22,6 +19,7 @@ class TabSwitcherTabGrid extends StatefulWidget {
 class _TabSwitcherTabGridState extends State<TabSwitcherTabGrid> {
   @override
   Widget build(BuildContext context) {
+    final wTheme = TabSwitcherTheme.of(context);
     return ScrollShadowContainer(
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -31,7 +29,7 @@ class _TabSwitcherTabGridState extends State<TabSwitcherTabGrid> {
             child: SafeArea(
               child: AnimatedGrid<TabSwitcherTab>(
                 items: widget.controller.tabs.toList(),
-                itemHeight: TabSwitcherTabGrid.kTabHeight,
+                itemHeight: wTheme.tabGridHeight,
                 keyBuilder: (t) => t.key,
                 builder: (context, tab, details) => TabSwitcherMinimizedTab(
                   tab,
@@ -39,8 +37,6 @@ class _TabSwitcherTabGridState extends State<TabSwitcherTabGrid> {
                   () => widget.controller
                       .closeTab(widget.controller.tabs[details.index]),
                   tab == widget.controller.currentTab,
-                  widget.foregroundColor,
-                  widget.selectedColor,
                 ),
                 columns: 2,
                 curve: Curves.ease,

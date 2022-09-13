@@ -5,16 +5,13 @@ import 'package:scroll_shadow_container/scroll_shadow_container.dart';
 
 import '../controller.dart';
 import 'minimized_tab.dart';
+import 'theme.dart';
 
 /// Displays list of minimized tabs
 class TabSwitcherTabList extends StatefulWidget {
-  TabSwitcherTabList(this.controller, this.foregroundColor, this.selectedColor);
+  TabSwitcherTabList(this.controller);
 
   final TabSwitcherController controller;
-  final Color? foregroundColor;
-  final Color? selectedColor;
-
-  static double kTabHeight = 148;
 
   @override
   State<TabSwitcherTabList> createState() => _TabSwitcherTabListState();
@@ -36,9 +33,13 @@ class _TabSwitcherTabListState extends State<TabSwitcherTabList> {
           tab.index,
           (context, animation) => SizeTransition(
                 axis: Axis.vertical,
-                sizeFactor:
-                    CurvedAnimation(parent: animation, curve: Curves.ease),
-                child: SizedBox(height: TabSwitcherTabList.kTabHeight),
+                sizeFactor: CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.ease,
+                ),
+                child: SizedBox(
+                  height: TabSwitcherTheme.of(context).tabListHeight,
+                ),
               ),
           duration: Duration(milliseconds: 150));
     });
@@ -53,6 +54,7 @@ class _TabSwitcherTabListState extends State<TabSwitcherTabList> {
 
   @override
   Widget build(BuildContext context) {
+    final wTheme = TabSwitcherTheme.of(context);
     return ScrollShadowContainer(
       child: Scrollbar(
         child: SafeArea(
@@ -68,14 +70,12 @@ class _TabSwitcherTabListState extends State<TabSwitcherTabList> {
                   end: Offset(0, 0),
                 )),
                 child: Container(
-                  height: TabSwitcherTabList.kTabHeight,
+                  height: wTheme.tabListHeight,
                   child: TabSwitcherMinimizedTab(
                     widget.controller.tabs[i],
                     () => widget.controller.switchToTab(i),
                     () => widget.controller.closeTab(widget.controller.tabs[i]),
                     widget.controller.tabs[i] == widget.controller.currentTab,
-                    widget.foregroundColor,
-                    widget.selectedColor,
                   ),
                 ),
               ),

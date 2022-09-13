@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tab_switcher/tab_count_icon.dart';
+import 'package:tab_switcher/widgets/tab_count_icon.dart';
 import 'package:tab_switcher/tab_switcher.dart';
 import 'package:tab_switcher_example/counter_tab.dart';
 
@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
           DemoSettings.rebuildRootWidget = () => setState(() {});
           return MaterialApp(
             title: 'Flutter Demo',
-            theme: ThemeData(primarySwatch: Colors.blue, brightness: DemoSettings.brightness),
+            theme: ThemeData(
+                primarySwatch: Colors.blue,
+                brightness: DemoSettings.brightness),
             home: const MyHomePage(),
             debugShowCheckedModeBanner: false,
           );
@@ -96,14 +98,16 @@ class NewTabButton extends StatelessWidget {
             Text('New tab'),
           ],
         ),
-        onPressed: () => controller.pushTab(CounterTab(), foreground: DemoSettings.openTabsInForeground),
+        onPressed: () => controller.pushTab(CounterTab(),
+            foreground: DemoSettings.openTabsInForeground),
       ),
     );
   }
 }
 
 class DemoSettingsPopupButton extends StatelessWidget {
-  const DemoSettingsPopupButton({required this.controller, Key? key}) : super(key: key);
+  const DemoSettingsPopupButton({required this.controller, Key? key})
+      : super(key: key);
 
   final TabSwitcherController controller;
 
@@ -112,7 +116,8 @@ class DemoSettingsPopupButton extends StatelessWidget {
         itemBuilder: (BuildContext context) => [
           PopupMenuItem<String>(
             value: 'foreground',
-            child: Text('Open tabs in background: ' + (!DemoSettings.openTabsInForeground).toString()),
+            child: Text('Open tabs in background: ' +
+                (!DemoSettings.openTabsInForeground).toString()),
           ),
           const PopupMenuItem<String>(
             value: 'theme',
@@ -121,11 +126,14 @@ class DemoSettingsPopupButton extends StatelessWidget {
         ],
         onSelected: (v) {
           if (v == "theme") {
-            DemoSettings.brightness = DemoSettings.brightness == Brightness.dark ? Brightness.light : Brightness.dark;
+            DemoSettings.brightness = DemoSettings.brightness == Brightness.dark
+                ? Brightness.light
+                : Brightness.dark;
             DemoSettings.rebuildRootWidget();
           }
           if (v == "foreground") {
-            DemoSettings.openTabsInForeground = !DemoSettings.openTabsInForeground;
+            DemoSettings.openTabsInForeground =
+                !DemoSettings.openTabsInForeground;
           }
         },
       );
