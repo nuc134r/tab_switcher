@@ -143,7 +143,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
                           Column(
                             children: [
                               Expanded(
-                                child: tab.getContent(),
+                                child: tab.getContent(context),
                               ),
                             ],
                           ),

@@ -1,9 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:ui' as ui;
-
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'tab.dart';
 
@@ -36,8 +32,10 @@ class TabSwitcherController {
   bool get switcherActive =>
       _switcherActive ?? (_switcherActive = _tabs.isEmpty);
   set switcherActive(bool value) {
-    if (value == false && tabCount == 0)
-      return; // switcher cannot be exited when there are no tabs
+    if (value == false && tabCount == 0) {
+      // switcher cannot be exited when there are no tabs
+      return;
+    }
     if (_switcherActive != value) {
       _switcherActive = value;
       _switchModeSubject.add(value);
@@ -53,7 +51,6 @@ class TabSwitcherController {
     tab.index = _tabs.length - 1;
 
     if (foreground) {
-      _currentTab?.onSave(_currentTab!.state);
       _currentTab = tab;
       if (_switcherActive == true) {
         _switcherActive = false;
@@ -91,7 +88,6 @@ class TabSwitcherController {
 
   void switchToTab(int index) {
     if (index >= 0 && index < _tabs.length) {
-      _currentTab?.onSave(_currentTab!.state);
       _currentTab = _tabs[index];
       _currentTabChangedSubject.sink.add(_currentTab);
     }

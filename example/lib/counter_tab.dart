@@ -48,6 +48,11 @@ class CounterTab extends TabSwitcherTab {
   @override
   void onSave(TabState state) {}
 
+  @override
+  TabState onRestore() {
+    return TabState();
+  }
+
   int _counter = 0;
 
   int _tabInstanceNumber = 0;
