@@ -12,7 +12,7 @@ Then you came to the right place. Wrap your screens in tabs to offer rich multit
 
 [Github Pages](https://hymns-for-worship.github.io/tab_switcher/)
 
-## Screenshot
+## Screenshots
 
 ![](screenshots/counter.png)
 ![](screenshots/tabs.png)
