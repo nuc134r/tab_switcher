@@ -1,10 +1,10 @@
 name: tab_switcher
-description: Build your complex app around tabs just like Chrome for Android 
-version: 1.0.1
+description: Build your complex app around tabs just like Chrome for Android
+version: 1.1.0
 repository: https://github.com/nuc134r/tab_switcher
 
 environment:
-  sdk: '>=2.16.1 <3.0.0'
+  sdk: ">=2.16.1 <3.0.0"
   flutter: ">=2.5.0"
 
 dependencies:
