@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:flutter/material.dart';
+
 import 'tab.dart';
 
 /// Main controller of the tab switcher.
 /// Opens new tabs, closes tabs, switches tabs programmatically.
 /// Provides streams for common events.
-class TabSwitcherController {
+class TabSwitcherController extends ChangeNotifier {
   int get tabCount => _tabs.length;
   UnmodifiableListView<TabSwitcherTab> get tabs => UnmodifiableListView(_tabs);
   TabSwitcherTab? get currentTab => _currentTab;
@@ -60,6 +62,7 @@ class TabSwitcherController {
     }
 
     _newTabSubject.sink.add(tab);
+    notifyListeners();
   }
 
   void closeTab(TabSwitcherTab tab) {
@@ -84,6 +87,7 @@ class TabSwitcherController {
     }
 
     _tabClosedSubject.sink.add(tab);
+    notifyListeners();
   }
 
   void switchToTab(int index) {
@@ -95,6 +99,7 @@ class TabSwitcherController {
     if (switcherActive) {
       switcherActive = false;
     }
+    notifyListeners();
   }
 
   TabSwitcherTab? _currentTab;

@@ -19,12 +19,8 @@ class TabSwitcherWidget extends StatefulWidget {
   TabSwitcherWidget({
     required this.controller,
     this.theme = const TabSwitcherThemeData(),
-    this.onRestore,
-    this.onSave,
   });
 
-  final Future<TabSwitcherController> Function()? onRestore;
-  final Future<void> Function(TabSwitcherController)? onSave;
   final TabSwitcherController controller;
   final TabSwitcherThemeData theme;
 
@@ -32,8 +28,7 @@ class TabSwitcherWidget extends StatefulWidget {
   State<TabSwitcherWidget> createState() => _TabSwitcherWidgetState();
 }
 
-class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
-    with WidgetsBindingObserver {
+class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
   late TabSwitcherController controller = widget.controller;
 
   late PageController _appBarPageController;
@@ -45,39 +40,14 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
   StreamSubscription<bool>? _onTabSwitch;
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    switch (state) {
-      case AppLifecycleState.detached:
-      case AppLifecycleState.inactive:
-      case AppLifecycleState.paused:
-        debugPrint('tabs: save');
-        widget.onSave?.call(controller);
-        break;
-      case AppLifecycleState.resumed:
-        debugPrint('tabs: restore');
-        if (widget.onRestore != null) {
-          widget.onRestore!().then((value) {
-            controller = value;
-            init();
-          });
-        }
-        break;
-      default:
-    }
-  }
-
-  @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
     cancelSubscriptions();
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     init();
   }
 
