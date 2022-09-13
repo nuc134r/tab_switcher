@@ -33,6 +33,7 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
       },
       child: Container(
         height: appBarHeight,
+        color: theme.appBarBackgroundColor,
         child: Stack(
           children: [
             buildAppBar(context, null),
@@ -72,7 +73,6 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
       return theme.appBarBuilder!(context, tab);
     }
     return AppBar(
-      primary: false,
       backgroundColor: theme.appBarBackgroundColor,
       foregroundColor: theme.appBarForegroundColor,
       actions: [
