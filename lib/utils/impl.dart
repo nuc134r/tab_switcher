@@ -10,7 +10,9 @@ import 'tab.dart';
 import 'theme.dart';
 
 typedef TabWidgetBuilder = Widget Function(
-    BuildContext context, TabSwitcherTab? tab);
+  BuildContext context,
+  TabSwitcherTab? tab,
+);
 
 /// Root widget for building apps with full screen tabs
 class TabSwitcherWidget extends StatefulWidget {
@@ -21,10 +23,10 @@ class TabSwitcherWidget extends StatefulWidget {
     this.onSave,
   });
 
-  final TabSwitcherThemeData theme;
-  final TabSwitcherController controller;
   final TabSwitcherController Function()? onRestore;
   final void Function(TabSwitcherController)? onSave;
+  final TabSwitcherController controller;
+  final TabSwitcherThemeData theme;
 
   @override
   State<TabSwitcherWidget> createState() => _TabSwitcherWidgetState();
@@ -32,21 +34,15 @@ class TabSwitcherWidget extends StatefulWidget {
 
 class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
     with WidgetsBindingObserver {
-  bool _isNavigatingToPage = false;
   late TabSwitcherController controller = widget.controller;
+
   late PageController _appBarPageController;
   late PageController _bodyPageController;
-  StreamSubscription<TabSwitcherTab>? _onTabClose;
+  bool _isNavigatingToPage = false;
   StreamSubscription<TabSwitcherTab>? _onNewTab;
-  StreamSubscription<bool>? _onTabSwitch;
   StreamSubscription<TabSwitcherTab?>? _onTabChanged;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    init();
-  }
+  StreamSubscription<TabSwitcherTab>? _onTabClose;
+  StreamSubscription<bool>? _onTabSwitch;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -77,28 +73,10 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
   }
 
   @override
-  Widget build(BuildContext context) {
-    var displaySwitcher = controller.switcherActive;
-    var theme = Theme.of(context);
-    final wTheme = widget.theme;
-    final backgroundColor =
-        wTheme.backgroundColor ?? theme.scaffoldBackgroundColor;
-    return TabSwitcherTheme(
-      data: widget.theme,
-      child: Container(
-        color: backgroundColor,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: TabSwitcherAppBar(
-            controller,
-            _appBarPageController,
-            MediaQuery.of(context),
-            wTheme,
-          ),
-          body: displaySwitcher ? buildSwitcher(context) : buildBody(context),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    init();
   }
 
   Widget buildSwitcher(BuildContext context) {
@@ -130,7 +108,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
     );
   }
 
-  Widget buildBody(BuildContext context) {
+  Widget buildTabs(BuildContext context) {
     final wTheme = widget.theme;
     return PageView.builder(
       controller: _bodyPageController,
@@ -208,5 +186,38 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget>
         }
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final wTheme = widget.theme;
+    var displaySwitcher = controller.switcherActive;
+    return TabSwitcherTheme(
+      data: widget.theme,
+      child: Container(
+        color: wTheme.backgroundColor ?? theme.scaffoldBackgroundColor,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: wTheme.position == TabSwitcherPosition.top
+              ? TabSwitcherAppBar(
+                  controller,
+                  _appBarPageController,
+                  MediaQuery.of(context),
+                  wTheme,
+                )
+              : null,
+          body: displaySwitcher ? buildSwitcher(context) : buildTabs(context),
+          bottomNavigationBar: wTheme.position == TabSwitcherPosition.bottom
+              ? TabSwitcherAppBar(
+                  controller,
+                  _appBarPageController,
+                  MediaQuery.of(context),
+                  wTheme,
+                )
+              : null,
+        ),
+      ),
+    );
   }
 }

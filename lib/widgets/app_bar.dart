@@ -72,12 +72,12 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
       return theme.appBarBuilder!(context, tab);
     }
     return AppBar(
-      title: tab?.getInfo(context).title,
+      primary: false,
+      backgroundColor: theme.appBarBackgroundColor,
+      foregroundColor: theme.appBarForegroundColor,
       actions: [
         TabCountIcon(controller: controller),
       ],
-      backgroundColor: theme.appBarBackgroundColor,
-      foregroundColor: theme.appBarForegroundColor,
     );
   }
 

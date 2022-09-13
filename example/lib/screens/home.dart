@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tab_switcher/tab_switcher.dart';
 import 'package:tab_switcher/widgets/tab_count_icon.dart';
 
-import '../go_router_tab.dart';
+import '../tabs/go_router.dart';
 import '../router.dart';
 
 class Home extends StatefulWidget {
@@ -29,27 +29,19 @@ class _HomeState extends State<Home> {
         controller: controller,
         theme: TabSwitcherThemeData(
           appBarBuilder: (context, tab) {
-            if (tab != null) {
-              final info = tab.getInfo(context);
-              return AppBar(
-                elevation: 0,
-                leading: info.leading,
-                title: info.title,
-                actions: [
-                  ...info.actions ?? [],
-                  TabCountIcon(controller: controller),
-                ],
-              );
-            }
+            final info = tab?.getInfo(context);
             return AppBar(
+              primary: false,
               elevation: 0,
-              backgroundColor: theme.scaffoldBackgroundColor,
-              foregroundColor: theme.textTheme.bodyLarge!.color,
+              backgroundColor: colors.inverseSurface,
+              foregroundColor: colors.onInverseSurface,
               titleSpacing: 8,
-              leading: NewTabButton(controller: controller),
-              leadingWidth: 120,
+              title: info != null
+                  ? info.leading
+                  : NewTabButton(controller: controller),
               centerTitle: false,
               actions: [
+                ...info?.actions ?? [],
                 TabCountIcon(controller: controller),
               ],
             );
@@ -77,14 +69,15 @@ class NewTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.onInverseSurface;
     return IntrinsicWidth(
       child: MaterialButton(
         visualDensity: VisualDensity.compact,
         child: Row(
-          children: const [
-            Icon(Icons.add),
-            SizedBox(width: 8),
-            Text('New tab'),
+          children: [
+            Icon(Icons.add, color: color),
+            const SizedBox(width: 8),
+            Text('New tab', style: TextStyle(color: color)),
           ],
         ),
         onPressed: addTab,
@@ -102,7 +95,7 @@ extension ControllerUtils on TabSwitcherController {
     final tab = GoRouterTab(
       controller: this,
       routes: routes,
-      initialLocation: '/counter/value',
+      initialLocation: '/counter/$value',
       titleBuilder: (route) {
         if (route.startsWith('/counter')) {
           return const Text('Counter');

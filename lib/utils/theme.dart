@@ -11,7 +11,7 @@ class TabSwitcherThemeData {
     this.tabShadowColor,
     this.appBarBackgroundColor,
     this.appBarForegroundColor,
-    this.appBarHeight = 56,
+    this.appBarHeight = kToolbarHeight * 0.8,
     this.tabGridHeight = 256,
     this.tabListHeight = 148,
     this.appBarBuilder,
@@ -21,6 +21,7 @@ class TabSwitcherThemeData {
     this.switcherFooterBuilder,
     this.tabRadius,
     this.emptyTabsText = 'No open tabs',
+    this.position = TabSwitcherPosition.top,
   });
 
   final Color? backgroundColor;
@@ -40,6 +41,7 @@ class TabSwitcherThemeData {
   final WidgetBuilder? switcherFooterBuilder;
   final BorderRadiusGeometry? tabRadius;
   final String emptyTabsText;
+  final TabSwitcherPosition position;
 
   @override
   bool operator ==(Object other) {
@@ -85,6 +87,11 @@ class TabSwitcherThemeData {
         tabRadius.hashCode ^
         emptyTabsText.hashCode;
   }
+}
+
+enum TabSwitcherPosition {
+  top,
+  bottom,
 }
 
 class TabSwitcherTheme extends InheritedWidget {
