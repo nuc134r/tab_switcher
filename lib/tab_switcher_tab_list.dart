@@ -54,31 +54,33 @@ class _TabSwitcherTabListState extends State<TabSwitcherTabList> {
   Widget build(BuildContext context) {
     return ScrollShadowContainer(
       child: Scrollbar(
-        child: AnimatedList(
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          key: animatedListKey,
-          itemBuilder: (context, i, animation) => SizeTransition(
-            sizeFactor: animation,
-            child: SlideTransition(
-              position: animation.drive(Tween(
-                begin: Offset(-150, 0),
-                end: Offset(0, 0),
-              )),
-              child: Container(
-                height: TabSwitcherTabList.kTabHeight,
-                child: TabSwitcherMinimizedTab(
-                  widget.controller.tabs[i],
-                  () => widget.controller.switchToTab(i),
-                  () => widget.controller.closeTab(widget.controller.tabs[i]),
-                  widget.controller.tabs[i] == widget.controller.currentTab,
-                  widget.foregroundColor,
-                  widget.selectedColor,
+        child: SafeArea(
+          child: AnimatedList(
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            key: animatedListKey,
+            itemBuilder: (context, i, animation) => SizeTransition(
+              sizeFactor: animation,
+              child: SlideTransition(
+                position: animation.drive(Tween(
+                  begin: Offset(-150, 0),
+                  end: Offset(0, 0),
+                )),
+                child: Container(
+                  height: TabSwitcherTabList.kTabHeight,
+                  child: TabSwitcherMinimizedTab(
+                    widget.controller.tabs[i],
+                    () => widget.controller.switchToTab(i),
+                    () => widget.controller.closeTab(widget.controller.tabs[i]),
+                    widget.controller.tabs[i] == widget.controller.currentTab,
+                    widget.foregroundColor,
+                    widget.selectedColor,
+                  ),
                 ),
               ),
             ),
+            initialItemCount: widget.controller.tabCount,
           ),
-          initialItemCount: widget.controller.tabCount,
         ),
       ),
     );
