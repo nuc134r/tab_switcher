@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tab_switcher/tab_switcher.dart';
 import 'package:tab_switcher/widgets/tab_count_icon.dart';
 
@@ -25,7 +24,9 @@ class _HomeState extends State<Home> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: TabSwitcherWidget(
+        media: MediaQuery.of(context),
         controller: controller,
         theme: TabSwitcherThemeData(
           appBarBuilder: (context, tab) {

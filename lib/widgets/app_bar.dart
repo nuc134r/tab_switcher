@@ -7,13 +7,13 @@ import '../utils/theme.dart';
 import 'tab_count_icon.dart';
 
 /// Wraps supplied app bar builder to add gesture support, animations and transitions
-class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
-  TabSwitcherAppBar(
-    this.controller,
-    this.pageController,
-    this.mediaQuery,
-    this.theme,
-  );
+class TabSwitcherAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const TabSwitcherAppBar({
+    required this.controller,
+    required this.pageController,
+    required this.mediaQuery,
+    required this.theme,
+  });
 
   final PageController pageController;
   final MediaQueryData mediaQuery;
@@ -21,45 +21,60 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabSwitcherThemeData theme;
 
   @override
+  Size get preferredSize => Size(
+        double.infinity,
+        mediaQuery.padding.top + theme.appBarHeight,
+      );
+
+  @override
+  State<TabSwitcherAppBar> createState() => _TabSwitcherAppBarState();
+}
+
+class _TabSwitcherAppBarState extends State<TabSwitcherAppBar> {
+  @override
   Widget build(BuildContext context) {
-    final tab = controller.currentTab;
-    final bgColor = theme.backgroundColor ?? Colors.transparent;
-    final appBarHeight = mediaQuery.padding.top + theme.appBarHeight;
+    final tab = widget.controller.currentTab;
+    final bgColor = widget.theme.backgroundColor ?? Colors.transparent;
+    final appBarHeight =
+        widget.mediaQuery.padding.top + widget.theme.appBarHeight;
     return GestureDetector(
       onVerticalDragStart: (d) {
-        if (!controller.switcherActive) {
-          controller.switcherActive = true;
+        if (!widget.controller.switcherActive) {
+          widget.controller.switcherActive = true;
         }
       },
       child: Container(
         height: appBarHeight,
-        color: theme.appBarBackgroundColor,
+        color: widget.theme.appBarBackgroundColor,
         child: Stack(
           children: [
             buildAppBar(context, null),
             IgnorePointer(
-              ignoring: controller.switcherActive,
+              ignoring: widget.controller.switcherActive,
               child: AnimatedOpacity(
-                child: controller.switcherActive
+                child: widget.controller.switcherActive
                     ? buildAppBar(
                         context,
-                        tab != null ? controller.tabs[tab.index] : null,
+                        tab != null ? widget.controller.tabs[tab.index] : null,
                       )
                     : Container(
                         color: bgColor,
                         child: PageView.builder(
-                          controller: pageController,
+                          controller: widget.pageController,
                           physics: ResponsiveBouncingScrollPhysics(
                             parent: AlwaysScrollableScrollPhysics(),
                           ),
-                          itemCount: controller.tabCount,
+                          itemCount: widget.controller.tabCount,
                           itemBuilder: (c, i) {
-                            return buildAppBar(context, controller.tabs[i]);
+                            return buildAppBar(
+                              context,
+                              widget.controller.tabs[i],
+                            );
                           },
                         ),
                       ),
                 duration: Duration(milliseconds: 125),
-                opacity: controller.switcherActive ? 0 : 1,
+                opacity: widget.controller.switcherActive ? 0 : 1,
               ),
             )
           ],
@@ -69,19 +84,15 @@ class TabSwitcherAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget buildAppBar(BuildContext context, TabSwitcherTab? tab) {
-    if (theme.appBarBuilder != null) {
-      return theme.appBarBuilder!(context, tab);
+    if (widget.theme.appBarBuilder != null) {
+      return widget.theme.appBarBuilder!(context, tab);
     }
     return AppBar(
-      backgroundColor: theme.appBarBackgroundColor,
-      foregroundColor: theme.appBarForegroundColor,
+      backgroundColor: widget.theme.appBarBackgroundColor,
+      foregroundColor: widget.theme.appBarForegroundColor,
       actions: [
-        TabCountIcon(controller: controller),
+        TabCountIcon(controller: widget.controller),
       ],
     );
   }
-
-  @override
-  Size get preferredSize =>
-      Size(double.infinity, mediaQuery.padding.top + theme.appBarHeight);
 }

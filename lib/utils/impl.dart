@@ -18,11 +18,13 @@ typedef TabWidgetBuilder = Widget Function(
 class TabSwitcherWidget extends StatefulWidget {
   TabSwitcherWidget({
     required this.controller,
+    required this.media,
     this.theme = const TabSwitcherThemeData(),
   });
 
   final TabSwitcherController controller;
   final TabSwitcherThemeData theme;
+  final MediaQueryData media;
 
   @override
   State<TabSwitcherWidget> createState() => _TabSwitcherWidgetState();
@@ -156,6 +158,7 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final media = widget.media;
     final wTheme = widget.theme;
     var displaySwitcher = controller.switcherActive;
     return TabSwitcherTheme(
@@ -163,22 +166,23 @@ class _TabSwitcherWidgetState extends State<TabSwitcherWidget> {
       child: Container(
         color: wTheme.backgroundColor ?? theme.scaffoldBackgroundColor,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           appBar: wTheme.position == TabSwitcherPosition.top
               ? TabSwitcherAppBar(
-                  controller,
-                  _appBarPageController,
-                  MediaQuery.of(context),
-                  wTheme,
+                  controller: controller,
+                  pageController: _appBarPageController,
+                  mediaQuery: media,
+                  theme: wTheme,
                 )
               : null,
           body: displaySwitcher ? buildSwitcher(context) : buildTabs(context),
           bottomNavigationBar: wTheme.position == TabSwitcherPosition.bottom
               ? TabSwitcherAppBar(
-                  controller,
-                  _appBarPageController,
-                  MediaQuery.of(context),
-                  wTheme,
+                  controller: controller,
+                  pageController: _appBarPageController,
+                  mediaQuery: media,
+                  theme: wTheme,
                 )
               : null,
         ),
