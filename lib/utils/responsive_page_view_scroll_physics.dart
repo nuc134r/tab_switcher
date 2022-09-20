@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/physics.dart';
 
 /// Fast and steady scrolling physics based on [ScrollPhysics].
 class ResponsiveClampedScrollPhysics extends ScrollPhysics {
